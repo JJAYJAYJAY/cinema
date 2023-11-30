@@ -1,0 +1,17 @@
+[33mcommit 7373bc67251feb8e4c95e5f1b97b7ab7b15a6862[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: JAYJAY <2422301985@qq.com>
+Date:   Thu Nov 30 12:57:21 2023 +0800
+
+    删除了一些多余代码
+
+[33mcommit 140011629dc5e31ef2f5fade73f546f12ec97fc6[m
+Author: JAYJAY <2422301985@qq.com>
+Date:   Wed Nov 29 13:06:09 2023 +0800
+
+    加入jquery
+
+[33mcommit 8b93095669cb9d9509ccb211e9979fa0defa0693[m
+Author: JJAYJAYJAY <146555471+JJAYJAYJAY@users.noreply.github.com>
+Date:   Tue Nov 28 12:25:41 2023 +0800
+
+    Initial commit
