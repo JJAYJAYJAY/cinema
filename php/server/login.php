@@ -32,11 +32,9 @@
     </div>
 </form>
 </body>
-<script>
-</script>
 </html>
 
 <?php
     require_once '../class/User.php';
     $user=new User($_POST['username'],$_POST['password']);
-
+?>
