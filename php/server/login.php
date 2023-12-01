@@ -35,6 +35,20 @@
 </html>
 
 <?php
+    /**
+     * @var mysqli $dbc
+     */
     require_once '../class/User.php';
-    $user=new User($_POST['username'],$_POST['password']);
+    //链接数据库
+    require_once '../dataBase/mysqli_connect.php';
+
+    $username=$_POST['username'];
+    $password=$_POST['password'];
+
+    $sql="select * from user where username='".$username."' and password='".$password."'";
+    if(mysqli_query($dbc,$sql)){
+      //登录成功
+    }else{
+        //登录失败
+    }
 ?>
