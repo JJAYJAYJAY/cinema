@@ -35,7 +35,17 @@
 </html>
 
 <?php
+/**
+ * @var  mysqli $dbc
+ */
 require_once '../class/User.php';
+require_once '../dataBase/mysqli_connect.php';
+
+$username=$_POST['username'];
+$password=$_POST['password'];
+$confirmPassword=$_POST['confirmPassword'];
+
+
 $user=new User($_POST['username'],$_POST['password']);
 ?>
 
