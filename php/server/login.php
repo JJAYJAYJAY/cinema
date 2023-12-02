@@ -45,10 +45,16 @@
     $username=$_POST['username'];
     $password=$_POST['password'];
 
-    $sql="select * from user where username='".$username."' and password='".$password."'";
-    if(mysqli_query($dbc,$sql)){
-      //登录成功
+    $sql="select * from users where username='".$username."' and password='".$password."'";
+    $result=mysqli_query($dbc,$sql);
+    if(mysqli_num_rows($result)==1){
+        //获取identity里的值
+        $sql="select identity from users where username='".$username."'";
+        $power=mysqli_query($dbc,$sql);
+        $_SESSION['user']=new User($username,$password,$power->fetch_row()[0]);
+        header("Location:home.php");
     }else{
-        //登录失败
+        //弹窗提示登录失败
+        echo "<script>alert('登录失败！');history.go(-1);</script>";
     }
 ?>
