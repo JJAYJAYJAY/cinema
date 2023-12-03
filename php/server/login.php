@@ -38,23 +38,25 @@
     /**
      * @var mysqli $dbc
      */
+    session_start();
     require_once '../class/User.php';
-    //链接数据库
     require_once '../dataBase/mysqli_connect.php';
 
-    $username=$_POST['username'];
-    $password=$_POST['password'];
-
-    $sql="select * from users where username='".$username."' and password='".$password."'";
-    $result=mysqli_query($dbc,$sql);
-    if(mysqli_num_rows($result)==1){
-        //获取identity里的值
-        $sql="select identity from users where username='".$username."'";
-        $power=mysqli_query($dbc,$sql);
-        $_SESSION['user']=new User($username,$password,$power->fetch_row()[0]);
-        header("Location:home.php");
-    }else{
-        //弹窗提示登录失败
-        echo "<script>alert('登录失败！');history.go(-1);</script>";
+    if(isset($_POST['username'])&&isset($_POST['password'])){
+        $username=$_POST['username'];
+        $password=$_POST['password'];
+        //查询数据库
+        $result=safeSelectQuery($dbc,
+            'select * from users where username=? and password=?',
+            [$username,$password]);
+        if(mysqli_num_rows($result)==1){
+            //登录成功
+            $user=new User(...$result->fetch_row());
+            $_SESSION['user']=$user;
+            $user->login();
+        }else{
+            //弹窗提示登录失败
+            echo "<script>alert('登录失败！');history.go(-1);</script>";
+        }
     }
 ?>

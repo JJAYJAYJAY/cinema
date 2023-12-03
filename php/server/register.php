@@ -18,16 +18,16 @@
         <input type="text" placeholder="用户名称" name="username" id="username">
     </div>
     <div class="input-box">
-        <input type="text" placeholder="邮箱" name="username" id="username">
+        <input type="text" placeholder="邮箱" name="email" id="email">
     </div>
     <div class="input-box">
-        <input type="text" placeholder="手机号" name="username" id="username">
+        <input type="text" placeholder="手机号" name="phone" id="phone">
     </div>
     <div class="input-box">
         <input type="password" placeholder="密码" name="password" id="password">
     </div>
     <div class="input-box">
-        <input type="password" placeholder="确认密码" name="confirmPassword" id="password">
+        <input type="password" placeholder="确认密码" name="confirmPassword" id="confirmPassword">
     </div>
     <input class="register-button" type="submit" value="注册">
 </form>
@@ -40,12 +40,38 @@
  */
 require_once '../class/User.php';
 require_once '../dataBase/mysqli_connect.php';
+require_once '../dataBase/checkInvalid.php';
 
-$username=$_POST['username'];
-$password=$_POST['password'];
-$confirmPassword=$_POST['confirmPassword'];
+// TODO:请检测用户输入的合法性
 
-
-$user=new User($_POST['username'],$_POST['password']);
+if(isset($_POST['username'])){
+    $username=$_POST['username'];
+    if(checkInput($dbc,$username,'checkUsername','用户名已存在！')){
+        return;
+    }
+    $email=$_POST['email'];
+    if(checkInput($dbc,$email,'checkEmail','邮箱已使用！')){
+        return;
+    }
+    $phone=$_POST['phone'];
+    if(checkInput($dbc,$phone,'checkPhone','手机号已使用！')){
+        return;
+    }
+    $password=$_POST['password'];
+    $confirmPassword=$_POST['confirmPassword'];
+    if($password!=$confirmPassword){
+        echo "<script>alert('两次密码不一致！');history.go(-1);</script>";
+        return;
+    }
+    $user=new User($_POST['username'],$_POST['password'],'guest',$_POST['email'],$_POST['phone']);
+    $user->register($dbc);
+}
+function checkInput($dbc, $input, $checkFunction, $errorMessage) {
+    if ($checkFunction($dbc, $input)) {
+        echo "<script>alert('$errorMessage');history.go(-1);</script>";
+        return true;
+    }
+    return false;
+}
 ?>
 
