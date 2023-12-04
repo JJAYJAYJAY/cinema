@@ -8,7 +8,7 @@ inputBoxes.on("blur", "input", function () {
     let index = $(this).parent().index()-1;
     switch (index){
         case 0:
-            if(input.length < 1 || input.length > 18){
+            if(input.length < 1 || input.length > 10){
                 $(this).next().addClass("error");
             }
             else {
@@ -55,7 +55,7 @@ function checkAll(inputBoxes) {
         let index = $(this).index()-1;
         switch (index){
             case 0:
-                if(input.length < 1 || input.length > 18){
+                if(input.length < 1 || input.length > 10){
                     $(this).children().next().addClass("error");
                 }
                 else {

@@ -16,7 +16,7 @@
     </div>
     <div class="input-box">
         <input type="text" placeholder="用户名称" name="username" id="username">
-        <p class="input-message">请输入1~18个字符</p>
+        <p class="input-message">请输入1~10个字符</p>
     </div>
     <div class="input-box">
         <input type="text" placeholder="邮箱" name="email" id="email">

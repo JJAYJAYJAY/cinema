@@ -2,15 +2,15 @@
 
 class User
 {
-    private $account;
+    private $username;
     private $password;
     private $power;
     private $email;
     private $phone;
 
-    public function __construct($account, $password, $power, $email, $phone)
+    public function __construct($username, $password, $power, $email, $phone)
     {
-        $this->account = $account;
+        $this->username = $username;
         $this->password = $password;
         $this->power = $power;
         $this->email = $email;
@@ -18,7 +18,7 @@ class User
     }
 
     public function register($dbc){
-        $result=safeBoolQuery($dbc, 'insert into users (username,password,identity,email,phone) values (?,?,?,?,?)', [$this->account,$this->password,$this->power,$this->email,$this->phone]);
+        $result=safeBoolQuery($dbc, 'insert into users (username,password,identity,email,phone) values (?,?,?,?,?)', [$this->username,$this->password,$this->power,$this->email,$this->phone]);
         var_dump($result);
         if($result){
             echo "<script>alert('注册成功！');history.go(-1);</script>";
@@ -28,14 +28,14 @@ class User
 
     }
     public function login(){
-        header("Location:homeregister.php");
+        header("Location:homeTemplate.php");
     }
 
 
     public function __toString()
     {
         return "User{" .
-            "account='" . $this->account . '\'' .
+            "account='" . $this->username . '\'' .
             ", password='" . $this->password . '\'' .
             ", power='" . $this->power . '\'' .
             ", email='" . $this->email . '\'' .
@@ -46,9 +46,9 @@ class User
     /**
      * @return mixed
      */
-    public function getAccount()
+    public function getUsername()
     {
-        return $this->account;
+        return $this->username;
     }
 
     /**

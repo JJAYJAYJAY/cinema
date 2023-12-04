@@ -1,0 +1,72 @@
+html{
+    width: 100vw;
+    height: 100vh;
+}
+body{
+    width: 100%;
+    height: 100%;
+    background-color: #e0e0e0;
+}
+.header{
+    width: 100%;
+    height: 60px;
+}
+.content{
+    display: flex;
+    align-items: center;
+    height: calc(100% - 60px);
+}
+
+.left-menu{
+    background: #1196fd;
+    background: linear-gradient(180deg, #595959 0%, rgba(121, 182, 220, 0.68) 100%);
+    height: 100%;
+    width: 10%;
+    user-select: none;
+}
+.greet{
+    position: absolute;
+    top: 10px;
+    left: 30px;
+    color: #232323;
+    font-size: xx-large;
+    font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.left-menu ul{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 30px;
+}
+.left-menu ul li{
+    height: 30px;
+    background: inherit;
+    color: #ffffff;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    transition: all 0.3s ease-in-out;
+}
+.left-menu ul .active{
+    background: #ffffff;
+    color: #000;
+}
+.left-menu ul li:hover{
+    color: #000;
+    background: #ffffff;
+}
+.right-content{
+    height: 100%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+iframe{
+    width: 100%;
+    height: 99.9%;
+}

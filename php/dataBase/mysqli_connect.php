@@ -16,9 +16,10 @@ mysqli_set_charset($dbc, 'utf8');
  * @param $params array
  * @return mysqli_result
  */
-function safeSelectQuery($dbc, $query, $params) {
+function safeSelectQuery($dbc, $query, $params=[]) {
     $stmt = $dbc->prepare($query);
-    $stmt->bind_param(str_repeat('s', count($params)), ...$params);
+    if($params  != [])
+        $stmt->bind_param(str_repeat('s', count($params)), ...$params);
     $stmt->execute();
     $result = $stmt->get_result();
     $stmt->close();
