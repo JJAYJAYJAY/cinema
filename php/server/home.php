@@ -18,7 +18,7 @@ require_once '../dataBase/mysqli_connect.php';
     <link rel="stylesheet" href="../../static/icon/iconfont.css">
 </head>
 <body>
-<h1>近期上新</h1>
+<h1 class="header">近期上新</h1>
 <div class="card-box">
     <?php
     $cinemas=safeSelectQuery($dbc,
@@ -32,7 +32,6 @@ require_once '../dataBase/mysqli_connect.php';
 <script src="../../static/js/jquery-3.7.1.min.js"></script>
 </html>
 <?php
-
     function addCinemaCard($dbc,$name){
         $result=safeSelectQuery($dbc,
             'select * from images where name=?',
@@ -43,10 +42,14 @@ require_once '../dataBase/mysqli_connect.php';
                 <img src="../../{$result->fetch_row()[1]}" alt="加载失败">
             </div>
             <div class="content">
-                <div class="cinema-name">{$name}</div>
-                <button>查看详情</button>   
+                <div class="cinema-name">$name</div>
+            <div class="button-div">
+                <a href="cinemaDetails.php?name=$name" target="_blank" class="go-button">
+                    <span class="button-content">查看详情</span>
+                </a>
+            </div>       
             </div>
         </div>
 EOF;
-
     }
+

@@ -43,4 +43,5 @@ $user=$_SESSION['user'];
 </div>
 </body>
 <script src="../../static/js/jquery-3.7.1.min.js"></script>
+<script src="../../static/js/homeTemplate.js"></script>
 </html>
