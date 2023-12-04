@@ -57,51 +57,51 @@ function checkAll(inputBoxes) {
             case 0:
                 if(input.length < 1 || input.length > 10){
                     $(this).children().next().addClass("error");
+                    flag=false;
                 }
                 else {
                     $(this).children().next().addClass("correct");
                 }
-                flag=false;
                 break;
             case 1:
                 if(input.length < 1 || input.length > 18 || !/^\w+@\w+(\.\w+)+$/.test(input)){
                     $(this).children().next().addClass("error");
+                    flag=false;
                 }
                 else {
                     $(this).children().next().addClass("correct");
                 }
-                flag=false;
                 break;
             case 2:
                 //检测手机号是否合法
                 if(!/^1[3-9]\d{9}$/.test(input)){
                     $(this).children().next().addClass("error");
+                    flag=false;
                 }
                 else {
                     $(this).children().next().addClass("correct");
                 }
-                flag=false;
                 break;
             case 3:
                 //检测密码是否是8-16位
                 if(input.length < 8 || input.length > 16){
                     $(this).children().next().addClass("error");
+                    flag=false;
                 }
                 else {
                     $(this).children().next().addClass("correct");
                 }
-                flag=false;
                 break;
             case 4:
                 let password=$(".input-box input").eq(3).val()
                 //检测密码是否一致
                 if( input.length < 8 || input.length > 16 ||input !== password){
                     $(this).children().next().addClass("error");
+                    flag=false;
                 }
                 else {
                     $(this).children().next().addClass("correct");
                 }
-                flag=false;
                 break;
         }
     });

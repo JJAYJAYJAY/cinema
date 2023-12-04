@@ -21,9 +21,9 @@ class User
         $result=safeBoolQuery($dbc, 'insert into users (username,password,identity,email,phone) values (?,?,?,?,?)', [$this->username,$this->password,$this->power,$this->email,$this->phone]);
         var_dump($result);
         if($result){
-            echo "<script>alert('注册成功！');history.go(-1);</script>";
+            echo "<script>alert('注册成功！');window.location.href='login.php';</script>";
         }else{
-            echo "<script>alert('注册失败！');</script>";
+            echo "<script>alert('注册失败！');history.go(-1);</script>";
         }
 
     }

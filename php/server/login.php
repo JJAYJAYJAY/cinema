@@ -19,7 +19,7 @@
         <h2>你好，欢迎！</h2>
         <div class="input-box">
             <span class="iconfont">&#xe605;</span>
-            <input type="text" placeholder="手机号" name="phone" id="phone">
+            <input type="text" placeholder="手机号或用户名" name="phoneOrName" id="phoneOrName">
         </div>
         <div class="input-box">
             <span class="iconfont">&#xe604;</span>
@@ -42,13 +42,13 @@
     require_once '../class/User.php';
     require_once '../dataBase/mysqli_connect.php';
 
-    if(isset($_POST['phone'])&&isset($_POST['password'])){
-        $phone=$_POST['phone'];
+    if(isset($_POST['phoneOrName'])&&isset($_POST['password'])){
+        $phoneOrName=$_POST['phoneOrName'];
         $password=$_POST['password'];
         //查询数据库
         $result=safeSelectQuery($dbc,
-            'select * from users where phone=? and password=?',
-            [$phone,$password]);
+            'select * from users where (phone=? or username=?) and password=?',
+            [$phoneOrName,$phoneOrName,$password]);
         if(mysqli_num_rows($result)==1){
             //登录成功
             $user=new User(...$result->fetch_row());
