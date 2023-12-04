@@ -4,6 +4,10 @@ session_start();
 /**
  * @var User $user
  */
+if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
+    header('Location: login.php');
+    exit;
+}
 $user=$_SESSION['user'];
 ?>
 <!DOCTYPE html>

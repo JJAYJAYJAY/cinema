@@ -53,6 +53,7 @@
             //登录成功
             $user=new User(...$result->fetch_row());
             $_SESSION['user']=$user;
+            $_SESSION['is_logged_in'] = true;
             $user->login();
         }else{
             //弹窗提示登录失败
