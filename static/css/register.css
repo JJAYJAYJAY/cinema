@@ -25,16 +25,23 @@ body{
     margin-top: 30px;
 }
 .input-box{
-    border: #ccc solid 1px;
+    flex-direction: column;
     width: 80%;
     display: flex;
     align-items: center;
-    margin-top: 30px;
+    margin-top: 10px;
     border-radius: 5px;
     padding: 5px 0;
 }
+.input-message{
+    width: 90%;
+    font-size: small;
+    color: #cccccc;
+    margin-top: 5px;
+}
 .input-box input{
-    border: none;
+    border: #ccc solid 1px;
+    border-radius: 5px;
     width: 90%;
     outline: none;
     height: 34px;
@@ -52,4 +59,28 @@ body{
     color: white;
     font-size: large;
     cursor: pointer;
+}
+.correct{
+    color: green;
+}
+.error{
+    color: red;
+    animation: errorAnimation 0.2s ease-in-out;
+}
+@keyframes errorAnimation{
+    0%{
+        transform: translateX(0);
+    }
+    25%{
+        transform: translateX(10px);
+    }
+    50%{
+        transform: translateX(-10px);
+    }
+    75%{
+        transform: translateX(10px);
+    }
+    100%{
+        transform: translateX(0);
+    }
 }

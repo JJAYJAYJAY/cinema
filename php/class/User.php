@@ -28,7 +28,7 @@ class User
 
     }
     public function login(){
-        header("Location:home.php");
+        header("Location:homeregister.php");
     }
 
 
