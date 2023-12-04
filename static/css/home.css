@@ -29,6 +29,9 @@ body{
     align-items: center;
     transition: all 0.3s ease-in-out;
 }
+.cinema-card:hover{
+    transform: scale(1.05);
+}
 .cinema-image{
     width: 90%;
     height: 80%;
