@@ -17,21 +17,6 @@ class User
         $this->phone = $phone;
     }
 
-    public function register($dbc){
-        $result=safeBoolQuery($dbc, 'insert into users (username,password,identity,email,phone) values (?,?,?,?,?)', [$this->username,$this->password,$this->power,$this->email,$this->phone]);
-        var_dump($result);
-        if($result){
-            echo "<script>alert('注册成功！');window.location.href='login.php';</script>";
-        }else{
-            echo "<script>alert('注册失败！');history.go(-1);</script>";
-        }
-
-    }
-    public function login(){
-        header("Location:homeTemplate.php");
-    }
-
-
     public function __toString()
     {
         return "User{" .

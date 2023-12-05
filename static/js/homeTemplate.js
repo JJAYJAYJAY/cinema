@@ -19,28 +19,28 @@ items.each(function(index){
             $(this).on('click',function(){
                 clearActive(items);
                 $(this).addClass('active');
-                iframe.attr('src','cinemas.php');
+                iframe.attr('src','rank.php');
             })
             break;
         case 2:
             $(this).on('click',function(){
                 clearActive(items);
                 $(this).addClass('active');
-                iframe.attr('src','rank.php');
+                iframe.attr('src','search.php');
             })
             break;
         case 3:
             $(this).on('click',function(){
                 clearActive(items);
                 $(this).addClass('active');
-                iframe.attr('src','search.php');
+                iframe.attr('src','mine.php');
             })
             break;
         case 4:
             $(this).on('click',function(){
                 clearActive(items);
                 $(this).addClass('active');
-                iframe.attr('src','mine.php');
+                iframe.attr('src','myCommits.php');
             })
             break;
         case 5:

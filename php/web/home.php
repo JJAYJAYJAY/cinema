@@ -4,11 +4,10 @@
  */
 session_start();
 if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
-    header('Location: login.php');
+    header('Location: loginServer.php');
     exit;
 }
 require_once '../dataBase/mysqli_connect.php';
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +27,7 @@ require_once '../dataBase/mysqli_connect.php';
     $cinemas=safeSelectQuery($dbc,
         'select * from cinema order by time desc limit 10');
     while($cinema=$cinemas->fetch_row()){
-        addCinemaCard($dbc,$cinema[0]);
+        addCinemaCard($dbc,$cinema[1]);
     }
     ?>
 </div>
@@ -36,6 +35,11 @@ require_once '../dataBase/mysqli_connect.php';
 <script src="../../static/js/jquery-3.7.1.min.js"></script>
 </html>
 <?php
+/**
+ * @param $dbc mysqli
+ * @param $name string
+ * @return void
+ */
     function addCinemaCard($dbc,$name){
         $result=safeSelectQuery($dbc,
             'select * from images where name=?',

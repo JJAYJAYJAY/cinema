@@ -1,0 +1,76 @@
+.header{
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(90deg, #808080, #e0e0e0);
+}
+.greet{
+    position: absolute;
+    top: 10px;
+    left: 30px;
+    color: #232323;
+    font-size: xx-large;
+    font-weight: 600;
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+}
+.content{
+    width: 70%;
+    margin: 20px auto;
+}
+.cinema-name{
+    margin-bottom:10px ;
+    color: #232323;
+    font-size: xx-large;
+    font-weight: 600;
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+}
+.cinema-box{
+    display: flex;
+    width: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.cinema-box .left{
+    width: 30%;
+    height: 300px;
+}
+.cinema-box .left img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.cinema-box .middle{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 20px;
+    padding-left: 10px;
+    gap: 20px;
+}
+.cinema-item{
+    display: flex;
+    .cinema-item-title{
+        margin-right: 5px;
+    }
+}
+.cinema-box .right{
+    width: 20%;
+    border-left: 1px solid rgba(141, 141, 141, 0.91);
+    padding-left: 15px;
+    .title{
+        font-size: small;
+        color: #505050;
+    }
+    .score{
+        margin-top:10px ;
+        width: 30%;
+        height: 30px;
+        font-size: xx-large;
+        font-weight: 600;
+        font-family: Tahoma, Geneva, Verdana, sans-serif;
+    }
+}
+.cinema-introduce{
+
+}

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../../static/icon/iconfont.css">
 </head>
 <body>
-<form class="register-box" action="register.php" method="post" id="register-form">
+<form class="register-box" action="../server/registerServer.php" method="post" id="register-form">
     <div class="title">
         <h2>欢迎来到电影网</h2>
     </div>
@@ -40,45 +40,3 @@
 <script src="../../static/js/jquery-3.7.1.min.js"></script>
 <script src="../../static/js/register.js"></script>
 </html>
-
-<?php
-/**
- * @var  mysqli $dbc
- */
-require_once '../class/User.php';
-require_once '../dataBase/mysqli_connect.php';
-require_once '../dataBase/checkInvalid.php';
-
-// TODO:请检测用户输入的合法性 //已完成
-
-if(isset($_POST['username'])){
-    $username=$_POST['username'];
-    if(checkInput($dbc,$username,'checkUsername','用户名已存在！')){
-        return;
-    }
-    $email=$_POST['email'];
-    if(checkInput($dbc,$email,'checkEmail','邮箱已使用！')){
-        return;
-    }
-    $phone=$_POST['phone'];
-    if(checkInput($dbc,$phone,'checkPhone','手机号已使用！')){
-        return;
-    }
-    $password=$_POST['password'];
-    $confirmPassword=$_POST['confirmPassword'];
-    if($password!=$confirmPassword){
-        echo "<script>alert('两次密码不一致！');history.go(-1);</script>";
-        return;
-    }
-    $user=new User($_POST['username'],$_POST['password'],'guest',$_POST['email'],$_POST['phone']);
-    $user->register($dbc);
-}
-function checkInput($dbc, $input, $checkFunction, $errorMessage) {
-    if ($checkFunction($dbc, $input)) {
-        echo "<script>alert('$errorMessage');history.go(-1);</script>";
-        return true;
-    }
-    return false;
-}
-?>
-

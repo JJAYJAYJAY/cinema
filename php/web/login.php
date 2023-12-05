@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="../../static/js/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="../../static/css/meyer.css">
     <link rel="stylesheet" href="../../static/css/login.css">
     <link rel="stylesheet" href="../../static/icon/iconfont.css">
 </head>
 <body>
-<form class="login-box" action="login.php" method="post">
+<form class="login-box" id="login-form" action="../server/loginServer.php" method="post">
     <div class="login-photo">
         <img src="../../static/image/login.png" alt="加载失败">
     </div>
@@ -25,39 +24,13 @@
             <span class="iconfont">&#xe604;</span>
             <input type="password" placeholder="密码" name="password" id="password">
         </div>
-        <input class="login-button" type="submit" value="登录">
+        <input class="login-button" type="submit" id="login-button" value="登录">
         <div class="register">
             <a href="register.php">没有账号？立即注册</a>
         </div>
     </div>
 </form>
 </body>
+<script src="../../static/js/jquery-3.7.1.min.js"></script>
+<script src="../../static/js/login.js"></script>
 </html>
-
-<?php
-    /**
-     * @var mysqli $dbc
-     */
-    session_start();
-    require_once '../class/User.php';
-    require_once '../dataBase/mysqli_connect.php';
-
-    if(isset($_POST['phoneOrName'])&&isset($_POST['password'])){
-        $phoneOrName=$_POST['phoneOrName'];
-        $password=$_POST['password'];
-        //查询数据库
-        $result=safeSelectQuery($dbc,
-            'select * from users where (phone=? or username=?) and password=?',
-            [$phoneOrName,$phoneOrName,$password]);
-        if(mysqli_num_rows($result)==1){
-            //登录成功
-            $user=new User(...$result->fetch_row());
-            $_SESSION['user']=$user;
-            $_SESSION['is_logged_in'] = true;
-            $user->login();
-        }else{
-            //弹窗提示登录失败
-            echo "<script>alert('登录失败！');history.go(-1);</script>";
-        }
-    }
-?>

@@ -107,10 +107,28 @@ function checkAll(inputBoxes) {
     });
     return flag;
 }
-
 $("#register").on("click", function (e) {
     e.preventDefault();
     if(checkAll(inputBoxes)){
-        $("#register-form").trigger("submit")
+        let form = $("#register-form");
+        // Get form data
+        let formData = form.serialize();
+        $.ajax({
+            url: form.attr("action"),
+            type: "POST",
+            data: formData,
+            success: function(response) {
+                if (response.status === 'success') {
+                    window.location.href = 'login.php';
+                } else {
+                    alert(response.message)
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Handle error
+                console.log("Ajax request failed: ", textStatus, errorThrown);
+            }
+        })
     }
 });
+
