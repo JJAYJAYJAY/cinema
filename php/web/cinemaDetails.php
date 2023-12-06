@@ -58,9 +58,25 @@ $cinema=getMovie($dbc,$name);
             </div>
         </div>
     </div>
+    <div class="clearfix">
+        <div>
+            <span>评价:</span>
+            <div class="stars" id="stars">
+                <img class="star" src="../../static/image/star_hollow_hover.png" alt="">
+                <img class="star" src="../../static/image/star_hollow_hover.png" alt="">
+                <img class="star" src="../../static/image/star_hollow_hover.png" alt="">
+                <img class="star" src="../../static/image/star_hollow_hover.png" alt="">
+                <img class="star" src="../../static/image/star_hollow_hover.png" alt="">
+            </div>
+        </div>
+
+    </div>
     <div class="cinema-introduce">
-        <div >电影简介:</div>
-        <div><?php echo $cinema[6]?></div>
+        <div class="title">电影简介:</div>
+        <div class="introduce-content"><?php echo $cinema[6]?></div>
+    </div>
+    <div class="commits-box">
+
     </div>
 </div>
 </body>

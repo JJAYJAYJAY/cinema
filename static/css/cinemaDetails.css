@@ -71,6 +71,25 @@
         font-family: Tahoma, Geneva, Verdana, sans-serif;
     }
 }
+.clearfix{
+    .stars{
+        display: flex;
+    }
+}
 .cinema-introduce{
-
+    margin-top: 20px;
+    width: 70%;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    min-height: 150px;
+    .title{
+        font-size: larger;
+        color: #459145;
+    }
+    .introduce-content{
+        margin-top: 10px;
+        font-size: small;
+        color: #232323;
+    }
 }

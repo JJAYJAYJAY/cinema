@@ -25,7 +25,7 @@ require_once '../dataBase/mysqli_connect.php';
 <div class="card-box">
     <?php
     $cinemas=safeSelectQuery($dbc,
-        'select * from cinema order by time desc limit 10');
+        'select * from cinema order by time desc limit 8');
     while($cinema=$cinemas->fetch_row()){
         addCinemaCard($dbc,$cinema[1]);
     }
@@ -40,7 +40,7 @@ require_once '../dataBase/mysqli_connect.php';
  * @param $name string
  * @return void
  */
-    function addCinemaCard($dbc,$name){
+    function addCinemaCard($dbc, $name){
         $result=safeSelectQuery($dbc,
             'select * from images where name=?',
             [$name]);
