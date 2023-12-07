@@ -4,7 +4,7 @@
  */
 session_start();
 if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
-    header('Location: loginServer.php');
+    header('Location: login.php');
     exit;
 }
 require_once '../dataBase/mysqli_connect.php';

@@ -17,6 +17,8 @@
     margin: 20px auto;
 }
 .cinema-name{
+    width: 70%;
+    min-width: 670px;
     margin-bottom:10px ;
     color: #232323;
     font-size: xx-large;
@@ -26,6 +28,7 @@
 .cinema-box{
     display: flex;
     width: 70%;
+    min-width: 670px;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -63,22 +66,55 @@
         color: #505050;
     }
     .score{
-        margin-top:10px ;
-        width: 30%;
+        margin: 10px 0;
         height: 30px;
-        font-size: xx-large;
+        font-size: 30px;
         font-weight: 600;
         font-family: Tahoma, Geneva, Verdana, sans-serif;
     }
-}
-.clearfix{
     .stars{
         display: flex;
+        width: 105px;
+        height: 21px;
+        .star{
+            cursor: default;
+        }
+    }
+    .yellow{
+        position: relative;
+        top:-21px;
+        overflow: hidden;
+    }
+}
+.clearfix{
+    width: 70%;
+    min-width: 670px;
+    margin-top: 15px;
+    .small-box{
+        margin-top: 15px;
+        color: #1b78da;
+        width: fit-content;
+        font-size: small;
+        cursor: pointer;
+    }
+    .small-box:hover{
+        background: #1b78da;
+        color: #ffffff;
+    }
+}
+.stars-box{
+    display: flex;
+}
+.stars{
+    display: flex;
+    .star{
+        cursor: pointer;
     }
 }
 .cinema-introduce{
-    margin-top: 20px;
     width: 70%;
+    min-width: 670px;
+    margin-top: 20px;
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding: 10px;
@@ -91,5 +127,121 @@
         margin-top: 10px;
         font-size: small;
         color: #232323;
+        line-height: 1.5;
     }
+}
+.commits-box{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    min-width: 670px;
+    .commit-card{
+        width: 100%;
+        border-bottom: #cccccc 1px solid;
+        padding:10px 0;
+        .small-title{
+            display: flex;
+            margin-bottom: 10px;
+            gap:10px;
+            .who{
+                color: #126fda;
+                font-weight: 400;
+            }
+            .time{
+                font-size: small;
+                color: #808080;
+            }
+            .good{
+                position: absolute;
+                left: 870px;
+                font-size: small;
+                .good-button{
+                    color: #1b78da;
+                    margin-left: 2px;
+                }
+                .good-button:hover{
+                    color: #ffffff;
+                    background: #1b78da;
+                    cursor: pointer;
+                }
+            }
+        }
+        .commit-content{
+            line-height: 1.5;
+            color: #646363;
+        }
+    }
+}
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+.commit-form{
+    display: none;
+    background: #ffffff;
+    width: 700px;
+    height: 330px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 添加这一行 */
+    z-index: 2;
+    box-shadow: 0 0 15px #00000050;
+}
+.form-header{
+    width: 100%;
+    height: 40px;
+    font-size: larger;
+    background: #e5fdef;
+    line-height: 40px;
+    color: #0b6412;
+    :first-child{
+        padding-left: 10px;
+    }
+    :last-child{
+        position: absolute;
+        right: 10px;
+        font-size: small;
+        font-weight: 400;
+        cursor: pointer;
+        color: #595959;
+    }
+}
+.commit-form .stars-box{
+    margin-top: 20px;
+    margin-left: 20px;
+    gap: 20px;
+}
+.commit-label{
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.form-commit{
+    margin-top: 10px;
+    resize: none;
+    margin-left: 20px;
+    width:90%;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid #cccccc;
+}
+.form-commit:focus-visible{
+    outline-offset: 0;
+    outline: none;
+}
+.commit-button{
+    margin-top: 10px;
+    margin-left: calc(100% - 70px);
+    width: 60px;
+    height: 30px;
+    background: #1b78da;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
 }
