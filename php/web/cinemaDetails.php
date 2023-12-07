@@ -46,7 +46,7 @@ $commits=$commitsResult->fetch_all();
             </div>
         </div>
         <input type="hidden" name="who" value="<?php echo $user->getUsername()?>">
-        <input type="hidden" name="score" id="starsInput" value="0">
+        <input type="hidden" name="score" id="starsInput" value="2">
         <input type="hidden" name="cinema" value="<?php echo $name?>">
         <div class="commit-label">简短评论:</div>
         <textarea class="form-commit" name="content" id="content" placeholder="写下你的评论..."></textarea>
