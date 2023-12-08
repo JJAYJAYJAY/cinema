@@ -5,10 +5,10 @@
 header("Content-Type: application/json;charset=utf-8");
 require_once '../dataBase/mysqli_connect.php';
 
-$addCommit=function ($dbc){
+$addComment=function ($dbc){
     $time=date('Y-m-d H:i:s');
     if(safeBoolQuery($dbc,
-        'insert into commits (who,cinema,score,time,good,content) values (?,?,?,?,?,?)',
+        'insert into comment (who,cinema,score,time,good,content) values (?,?,?,?,?,?)',
         [$_POST['who'], $_POST['cinema'], (int)$_POST['score'], $time, 0, $_POST['content']])){
         echo json_encode(['status'=>'success']);
     }
@@ -19,10 +19,10 @@ $addCommit=function ($dbc){
 
 $addGood=function ($dbc){
     if(safeBoolQuery($dbc,
-        'insert into user_good_link (userid, commit_id) VALUE (?,?)',
-            [$_POST['userid'],$_POST['commitId']])){
+        'insert into user_good_link (userid, comment_id) VALUE (?,?)',
+            [$_POST['userid'],$_POST['commentId']])){
         if(safeBoolQuery($dbc,
-            'update commits set good=good+1 where time=? and cinema=? and who=?',
+            'update comment set good=good+1 where time=? and cinema=? and who=?',
             [$_POST['time'],$_POST['cinema'],$_POST['who']])){
             echo json_encode(['status'=>'success','error'=>$dbc->error]);
         }
@@ -34,10 +34,20 @@ $addGood=function ($dbc){
     }
 };
 
+$deleteComment=function ($dbc){
+    if(safeBoolQuery($dbc,'delete from comment where id=? ', [$_POST['commentId']])&&
+        safeBoolQuery($dbc, 'delete from user_good_link where comment_id=?', [$_POST['commentId']])){
+        echo json_encode(['status'=>'success','id'=>$_POST['commentId']]);
+    }
+    else {
+        echo json_encode(['status'=>'fail']);
+    }
+};
 
 $commands=array(
-    'addCommit'=>$addCommit,
-    'addGood'=>$addGood
+    'addComment'=>$addComment,
+    'addGood'=>$addGood,
+    'deleteComment'=>$deleteComment
 );
 
 

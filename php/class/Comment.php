@@ -1,6 +1,6 @@
 <?php
 
-class Commit
+class Comment
 {
     private $id;
     private $who;

@@ -4,7 +4,7 @@
  * @var User $user
  */
 require_once '../class/User.php';
-require_once '../class/Commit.php';
+require_once '../class/Comment.php';
 require_once '../class/Cinema.php';
 require_once '../dataBase/mysqli_connect.php';
 
@@ -16,12 +16,12 @@ if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
 $user=$_SESSION['user'];
 $name=$_GET['name'];
 $cinema=new Cinema(...getMovie($dbc,$name));
-$commitsResult=safeSelectQuery($dbc,
-    'select * from commits where cinema=?',
+$commentResult=safeSelectQuery($dbc,
+    'select * from comment where cinema=?',
     [$name]);
-$commits=[];
-while($commit=$commitsResult->fetch_row()){
-    $commits[]=new Commit(...$commit);
+$comments=[];
+while($comment=$commentResult->fetch_row()){
+    $comments[]=new Comment(...$comment);
 }
 ?>
 <!DOCTYPE html>
@@ -36,7 +36,7 @@ while($commit=$commitsResult->fetch_row()){
 </head>
 <body>
 <div class="overlay" id="overlay"></div>
-<div class="commit-form" id="commitForm">
+<div class="comment-form" id="commentForm">
     <form id="form" action="../server/detailsServer.php" method="post">
         <div class="form-header">
             <span>写评论</span> <a id="formClose">x</a>
@@ -51,13 +51,13 @@ while($commit=$commitsResult->fetch_row()){
                 <img class="star" src="../../static/image/star_hollow_hover.png" alt="">
             </div>
         </div>
-        <input type="hidden" name="command" value="addCommit">
+        <input type="hidden" name="command" value="addComment">
         <input type="hidden" name="who" value="<?php echo $user->getUsername()?>">
         <input type="hidden" name="score" id="starsInput" value="2">
         <input type="hidden" name="cinema" value="<?php echo $name?>">
-        <div class="commit-label">简短评论:</div>
-        <textarea class="form-commit" name="content" id="content" placeholder="写下你的评论..."></textarea>
-        <input class="commit-button" type="submit" value="提交" id="commitButton">
+        <div class="comment-label">简短评论:</div>
+        <textarea class="form-comment" name="content" id="content" placeholder="写下你的评论..."></textarea>
+        <input class="comment-button" type="submit" value="提交" id="commentButton">
     </form>
 </div>
 <div class="header">
@@ -90,16 +90,16 @@ while($commit=$commitsResult->fetch_row()){
             <div class="score">
                 <?php
                     $average = 0;
-                    if(count($commits)==0){
+                    if(count($comments)==0){
                         echo "暂无评分";
                     }else {
                         /**
-                         * @var Commit $commit
+                         * @var Comment $comment
                          */
-                        foreach ($commits as $commit) {
-                            $average += (int) $commit->getScore();
+                        foreach ($comments as $comment) {
+                            $average += (int) $comment->getScore();
                         }
-                        $average = round($average / count($commits), 1);
+                        $average = round($average / count($comments), 1);
                         echo $average;
                     }
                 ?>
@@ -135,14 +135,14 @@ while($commit=$commitsResult->fetch_row()){
                 <img class="star" src="../../static/image/star_hollow_hover.png" alt="">
             </div>
         </div>
-        <div class="small-box" id="writeCommit">
+        <div class="small-box" id="writeComment">
             写评论
         </div>
     </div>
-    <div class="commits-box">
+    <div class="comments-box">
         <?php
-        foreach ($commits as $commit){
-            addCommitCard($commit);
+        foreach ($comments as $comment){
+            addCommentCard($comment);
         }
         ?>
     </div>
@@ -176,17 +176,18 @@ EOF;
 }
 
 /**
- * @param $commit Commit
+ * @param $comment Comment
  * @return void
  */
-function addCommitCard($commit){
+function addCommentCard($comment){
+    global $user;
     echo <<<EOF
-        <div class="commit-card">
+        <div class="comment-card">
             <div class="small-title">
-                <span class="who">{$commit->getWho()}</span>
+                <span class="who">{$comment->getWho()}</span>
                 <span class="stars">
 EOF;
-    $n=$commit->getScore()/2;
+    $n=$comment->getScore()/2;
     for($i=0;$i<5;$i++){
         if($i<$n)
             echo '<img class="star" src="../../static/image/star_onmouseover.png" alt="">';
@@ -195,13 +196,16 @@ EOF;
     }
     echo <<<EOF
                 </span>
-                <span class="time">{$commit->getTime()}</span>
-                <span class="good"><span class="count">{$commit->getGood()}</span><span class="good-button">赞</span></span>
-                <span class="commitId" hidden>{$commit->getId()}</span>
+                <span class="time">{$comment->getTime()}</span>
+                <span class="good"><span class="count">{$comment->getGood()}</span><span class="good-button">赞</span></span>
+                <span class="commentId" hidden>{$comment->getId()}</span>
             </div>
-            <div class="commit-content">{$commit->getContent()}</div>
-        </div>
+            <div class="comment-content">{$comment->getContent()}</div>
 EOF;
+    if($user->getPower()==='admin'){
+        echo "<div class='delete-div'><a class='delete-button'>删除</a></div>";
+    }
+     echo   '</div>';
 }
 
 

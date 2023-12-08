@@ -30,13 +30,13 @@ formStars.children().each( (index, element)=>{
 });
 function openForm (){
     $('#overlay').css('display', 'block')
-    $('#commitForm').css('display', 'block')
+    $('#commentForm').css('display', 'block')
 }
 function closeForm (){
     $('#overlay').css('display', 'none')
-    $('#commitForm').css('display', 'none')
+    $('#commentForm').css('display', 'none')
 }
-$('#writeCommit').on('click', ()=> openForm());
+$('#writeComment').on('click', ()=> openForm());
 $('#formClose').on('click', ()=> closeForm());
 stars.children().each((index, element)=>{
     $(element).on('click', ()=>{
@@ -54,7 +54,7 @@ formStars.children().each((index, element)=>{
     });
 });
 
-$('#commitButton').on('click', (event)=>{
+$('#commentButton').on('click', (event)=>{
     event.preventDefault();
     let form = $('#form');
     let data = form.serialize();
@@ -75,7 +75,6 @@ $('#commitButton').on('click', (event)=>{
 
 $('.good-button').each((index, element)=>{
     $(element).on('click', ()=>{
-
         $.ajax({
             url: '../server/detailsServer.php',
             type: 'POST',
@@ -85,7 +84,7 @@ $('.good-button').each((index, element)=>{
                 'who':$(element).parent().siblings('.who').text(),
                 'cinema':$('.cinema-name').text().trim(),
                 'userid':$('#userid').text().trim(),
-                'commitId':$(element).parent().siblings('.commitId').text()
+                'commentId':$(element).parent().siblings('.commentId').text()
             },
             success: (response)=>{
                 if(response.status === 'success'){
@@ -93,5 +92,27 @@ $('.good-button').each((index, element)=>{
                 }else{}
             }
         })
+    })
+})
+
+$('.delete-button').each((index,element)=>{
+    $(element).on('click',()=>{
+        //二次确认弹窗
+        if(confirm('确认删除该评论？')) {
+            $.ajax({
+                url: '../server/detailsServer.php',
+                type: 'POST',
+                data: {
+                    'command': 'deleteComment',
+                    'commentId': $(element).parent().siblings('.small-title').children('.commentId').text()
+                },
+                success: (response) => {
+                    if (response.status === 'success') {
+                        $(element).parent().parent().remove();
+                    } else {
+                    }
+                }
+            })
+        }
     })
 })
