@@ -4,7 +4,10 @@
  * @var User $user
  */
 require_once '../class/User.php';
+require_once '../class/Commit.php';
+require_once '../class/Cinema.php';
 require_once '../dataBase/mysqli_connect.php';
+
 session_start();
 if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
     header('Location: login.php');
@@ -12,11 +15,14 @@ if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
 }
 $user=$_SESSION['user'];
 $name=$_GET['name'];
-$cinema=getMovie($dbc,$name);
+$cinema=new Cinema(...getMovie($dbc,$name));
 $commitsResult=safeSelectQuery($dbc,
     'select * from commits where cinema=?',
     [$name]);
-$commits=$commitsResult->fetch_all();
+$commits=[];
+while($commit=$commitsResult->fetch_row()){
+    $commits[]=new Commit(...$commit);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,6 +63,7 @@ $commits=$commitsResult->fetch_all();
 <div class="header">
     <div class="greet">
         <?php echo 'Hello,'.$user->getUsername(); ?>
+        <span id="userid" hidden><?php echo $user->getId()?></span>
     </div>
 </div>
 <div class="content">
@@ -69,11 +76,11 @@ $commits=$commitsResult->fetch_all();
         </div>
         <div class="middle">
             <?php
-            addCinemaItems('电影名称:',$cinema[1]);
-            addCinemaItems('上映时间:',$cinema[2]);
-            addCinemaItems('导演:',$cinema[3]);
-            addCinemaItems('制片国家/地区:',$cinema[4]);
-            addCinemaItems('电影时长:',$cinema[5].'分钟');
+            addCinemaItems('电影名称:',$cinema->getName());
+            addCinemaItems('上映时间:',$cinema->getTime());
+            addCinemaItems('导演:',$cinema->getDirector());
+            addCinemaItems('制片国家/地区:',$cinema->getCountry());
+            addCinemaItems('电影时长:',$cinema->getLength().'分钟');
             ?>
         </div>
         <div class="right">
@@ -86,8 +93,11 @@ $commits=$commitsResult->fetch_all();
                     if(count($commits)==0){
                         echo "暂无评分";
                     }else {
+                        /**
+                         * @var Commit $commit
+                         */
                         foreach ($commits as $commit) {
-                            $average += $commit[2];
+                            $average += (int) $commit->getScore();
                         }
                         $average = round($average / count($commits), 1);
                         echo $average;
@@ -112,7 +122,7 @@ $commits=$commitsResult->fetch_all();
     </div>
     <div class="cinema-introduce">
         <div class="title">电影简介:</div>
-        <div class="introduce-content"><?php echo $cinema[6]?></div>
+        <div class="introduce-content"><?php echo $cinema->getIntroduce()?></div>
     </div>
     <div class="clearfix">
         <div class="stars-box">
@@ -166,17 +176,17 @@ EOF;
 }
 
 /**
- * @param $commit array
+ * @param $commit Commit
  * @return void
  */
 function addCommitCard($commit){
     echo <<<EOF
         <div class="commit-card">
             <div class="small-title">
-                <span class="who">$commit[0]</span>
+                <span class="who">{$commit->getWho()}</span>
                 <span class="stars">
 EOF;
-    $n=$commit[2]/2;
+    $n=$commit->getScore()/2;
     for($i=0;$i<5;$i++){
         if($i<$n)
             echo '<img class="star" src="../../static/image/star_onmouseover.png" alt="">';
@@ -185,10 +195,11 @@ EOF;
     }
     echo <<<EOF
                 </span>
-                <span class="time">$commit[3]</span>
-                <span class="good"><span class="count">$commit[4]</span><span class="good-button">赞</span></span>
+                <span class="time">{$commit->getTime()}</span>
+                <span class="good"><span class="count">{$commit->getGood()}</span><span class="good-button">赞</span></span>
+                <span class="commitId" hidden>{$commit->getId()}</span>
             </div>
-            <div class="commit-content">$commit[5]</div>
+            <div class="commit-content">{$commit->getContent()}</div>
         </div>
 EOF;
 }

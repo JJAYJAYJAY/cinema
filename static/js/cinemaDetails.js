@@ -12,7 +12,6 @@ stars.children().each( (index, element)=>{
         $(this).attr('src', '../../static/image/star_hollow_hover.png')
     })
 });
-
 formStars.children().each( (index, element)=>{
     $(element).on('mouseenter', function (){
         $(this).nextAll().attr('src', '../../static/image/star_hollow_hover.png')
@@ -29,8 +28,6 @@ formStars.children().each( (index, element)=>{
     })
 
 });
-
-
 function openForm (){
     $('#overlay').css('display', 'block')
     $('#commitForm').css('display', 'block')
@@ -86,14 +83,14 @@ $('.good-button').each((index, element)=>{
                 'command':'addGood',
                 'time':$(element).parent().siblings('.time').text(),
                 'who':$(element).parent().siblings('.who').text(),
-                'cinema':$('.cinema-name').text().trim()
+                'cinema':$('.cinema-name').text().trim(),
+                'userid':$('#userid').text().trim(),
+                'commitId':$(element).parent().siblings('.commitId').text()
             },
             success: (response)=>{
                 if(response.status === 'success'){
                     $(element).prevAll('.count').text(parseInt($(element).prevAll('.count').text())+1)
-                }else{
-                    alert("失败")
-                }
+                }else{}
             }
         })
     })

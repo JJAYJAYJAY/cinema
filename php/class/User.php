@@ -2,14 +2,16 @@
 
 class User
 {
+    private $id;
     private $username;
     private $password;
     private $power;
     private $email;
     private $phone;
 
-    public function __construct($username, $password, $power, $email, $phone)
+    public function __construct($id,$username, $password, $power, $email, $phone)
     {
+        $this->id = $id;
         $this->username = $username;
         $this->password = $password;
         $this->power = $power;
@@ -68,4 +70,8 @@ class User
         return $this->phone;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
 }

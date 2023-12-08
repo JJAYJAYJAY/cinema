@@ -19,11 +19,17 @@ $addCommit=function ($dbc){
 
 $addGood=function ($dbc){
     if(safeBoolQuery($dbc,
-        'update commits set good=good+1 where time=? and cinema=? and who=?',
-        [$_POST['time'],$_POST['cinema'],$_POST['who']])){
-        echo json_encode(['status'=>'success','error'=>$dbc->error]);
-    }
-    else{
+        'insert into user_good_link (userid, commit_id) VALUE (?,?)',
+            [$_POST['userid'],$_POST['commitId']])){
+        if(safeBoolQuery($dbc,
+            'update commits set good=good+1 where time=? and cinema=? and who=?',
+            [$_POST['time'],$_POST['cinema'],$_POST['who']])){
+            echo json_encode(['status'=>'success','error'=>$dbc->error]);
+        }
+        else{
+            echo json_encode(['status'=>'fail']);
+        }
+    }else{
         echo json_encode(['status'=>'fail']);
     }
 };
