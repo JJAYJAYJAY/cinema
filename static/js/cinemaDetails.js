@@ -75,3 +75,26 @@ $('#commitButton').on('click', (event)=>{
         }
     })
 })
+
+$('.good-button').each((index, element)=>{
+    $(element).on('click', ()=>{
+
+        $.ajax({
+            url: '../server/detailsServer.php',
+            type: 'POST',
+            data: {
+                'command':'addGood',
+                'time':$(element).parent().siblings('.time').text(),
+                'who':$(element).parent().siblings('.who').text(),
+                'cinema':$('.cinema-name').text().trim()
+            },
+            success: (response)=>{
+                if(response.status === 'success'){
+                    $(element).prevAll('.count').text(parseInt($(element).prevAll('.count').text())+1)
+                }else{
+                    alert("失败")
+                }
+            }
+        })
+    })
+})

@@ -31,7 +31,7 @@ $commits=$commitsResult->fetch_all();
 <body>
 <div class="overlay" id="overlay"></div>
 <div class="commit-form" id="commitForm">
-    <form id="form" action="../server/addCommit.php" method="post">
+    <form id="form" action="../server/detailsServer.php" method="post">
         <div class="form-header">
             <span>写评论</span> <a id="formClose">x</a>
         </div>
@@ -45,6 +45,7 @@ $commits=$commitsResult->fetch_all();
                 <img class="star" src="../../static/image/star_hollow_hover.png" alt="">
             </div>
         </div>
+        <input type="hidden" name="command" value="addCommit">
         <input type="hidden" name="who" value="<?php echo $user->getUsername()?>">
         <input type="hidden" name="score" id="starsInput" value="2">
         <input type="hidden" name="cinema" value="<?php echo $name?>">
@@ -185,7 +186,7 @@ EOF;
     echo <<<EOF
                 </span>
                 <span class="time">$commit[3]</span>
-                <span class="good">$commit[4]<span class="good-button">赞</span></span>
+                <span class="good"><span class="count">$commit[4]</span><span class="good-button">赞</span></span>
             </div>
             <div class="commit-content">$commit[5]</div>
         </div>
