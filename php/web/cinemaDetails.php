@@ -28,7 +28,7 @@ while($comment=$commentResult->fetch_row()){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>电影详情</title>
+    <title><?php echo $name?></title>
     <script src="../../static/js/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="../../static/css/meyer.css">
     <link rel="stylesheet" href="../../static/css/cinemaDetails.css">

@@ -1,0 +1,9 @@
+.header{
+    height: 70px;
+    font-size: xx-large;
+    font-weight: bold;
+    padding-left: 30px;
+    line-height: 40px;
+    padding-top: 10px;
+    border-bottom: #cccccc solid 1px;
+}
