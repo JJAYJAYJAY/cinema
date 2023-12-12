@@ -66,6 +66,7 @@ $('#commentButton').on('click', (event)=>{
             if(response.status === 'success'){
                 alert('评论成功');
                 closeForm();
+                window.location.reload();
             }else{
                 alert(response.status);
             }
@@ -84,11 +85,11 @@ $('.good-button').each((index, element)=>{
                 'who':$(element).parent().siblings('.who').text(),
                 'cinema':$('.cinema-name').text().trim(),
                 'userid':$('#userid').text().trim(),
-                'commentId':$(element).parent().siblings('.commentId').text()
+                'commentId':$(element).attr('data-id')
             },
             success: (response)=>{
                 if(response.status === 'success'){
-                    $(element).prevAll('.count').text(parseInt($(element).prevAll('.count').text())+1)
+                    window.location.reload();
                 }else{}
             }
         })
@@ -104,11 +105,11 @@ $('.delete-button').each((index,element)=>{
                 type: 'POST',
                 data: {
                     'command': 'deleteComment',
-                    'commentId': $(element).parent().siblings('.small-title').children('.commentId').text()
+                    'commentId': $(element).attr('data-id')
                 },
                 success: (response) => {
                     if (response.status === 'success') {
-                        $(element).parent().parent().remove();
+                        window.location.reload();
                     } else {
                     }
                 }

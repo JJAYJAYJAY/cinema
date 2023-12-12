@@ -1,9 +1,20 @@
 <?php
 /**
  * @var mysqli $dbc
+ * @var User $nowUser
  */
-session_start();
 require_once '../dataBase/mysqli_connect.php';
+require_once '../class/User.php';
+session_start();
+if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
+    header('Location: login.php');
+    exit;
+}
+$users=safeSelectQuery($dbc,'select * from users');
+$usersArray=[];
+while($user=$users->fetch_row()) {
+    $usersArray[] = new User(...$user);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,16 +30,42 @@ require_once '../dataBase/mysqli_connect.php';
 <body>
 <div class="header">用户管理</div>
 <div class="user-box">
-    <table class="userList">
+    <table class="user-list">
         <tr>
             <th>用户名</th>
             <th>权限</th>
-            <th>操作</th>
+            <th>修改权限</th>
+            <th>删除</th>
         </tr>
+        <?php
+        /**
+         * @var User $user
+         */
+        foreach ($usersArray as $user){
+            if($user->getPower()==='admin')
+                continue;
+            addUserCard($user);
+        }
+        ?>
     </table>
 </div>
 </body>
 <script src="../../static/js/jquery-3.7.1.min.js"></script>
 <script src="../../static/js/admin.js"></script>
 </html>
-
+<?php
+function addUserCard($user)
+{
+    echo <<<EOF
+    <tr class="user-card">
+        <td>{$user->getUsername()}</td>
+        <td>{$user->getPower()}</td>
+        <td>
+            <button class="change-button" data-id="{$user->getId()}">修改</button>
+        </td>
+        <td>
+            <button class="delete-button" data-id="{$user->getId()}" data-id="{$user->getId()}">删除</button>
+        </td>    
+    </tr>
+EOF;
+}

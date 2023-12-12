@@ -21,11 +21,12 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH'])&&$_SERVER['REQUEST_METHOD']=='POST')
     if(checkInput($dbc,$phone,'checkPhone','手机号已使用！')){
         return;
     }
-    $user=new User($_POST['username'],$_POST['password'],'guest',$_POST['email'],$_POST['phone']);
-    safeBoolQuery($dbc, 'insert into users (username,password,identity,email,phone) values (?,?,?,?,?)', [$user->getUsername(),$user->getPassword(),$user->getPower(),$user->getEmail(),$user->getPhone()]);
-    echo json_encode(['status' => 'success','message'=>'注册成功！']);
+    if(safeBoolQuery($dbc, 'insert into users (username,password,identity,email,phone) values (?,?,?,?,?)', [$_POST['username'],$_POST['password'],'guest',$_POST['email'],$_POST['phone']])) {
+        echo json_encode(['status' => 'success', 'message' => '注册成功！']);
+    }
 }
-function checkInput($dbc, $input, $checkFunction, $errorMessage) {
+function checkInput($dbc, $input, $checkFunction, $errorMessage): bool
+{
     if ($checkFunction($dbc, $input)) {
         echo json_encode(['status' => 'fail', 'message' => $errorMessage]);
         return true;

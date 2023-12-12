@@ -7,3 +7,47 @@
     padding-top: 10px;
     border-bottom: #cccccc solid 1px;
 }
+.user-box{
+    margin-top: 30px;
+}
+.user-list{
+    width: 70%;
+    margin: 0 auto;
+}
+.user-list tbody{
+    display: flex;
+    flex-direction: column;
+}
+.user-list tbody>*{
+    display: flex;
+    justify-content: space-between;
+}
+.user-list tbody:first-child{
+    font-size: larger;
+}
+.user-list tbody>*:not(:first-child){
+    font-size: small;
+}
+.user-card{
+    margin-top: 20px;
+    border-bottom: #cccccc solid 1px;
+    padding-bottom: 5px;
+}
+.user-card td,th{
+    text-align: center;
+    width: 25%;
+    height: 30px;
+}
+.delete-button, .change-button{
+    width: 70%;
+    height: 25px;
+    background: #dedede;
+    border: none;
+    border-radius: 15px;
+    color: #6e6e6e;
+    cursor: pointer;
+}
+.delete-button:hover, .change-button:hover{
+    background:linear-gradient(0deg, #989797, #090909);
+    color: #ffffff;
+}

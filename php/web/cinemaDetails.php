@@ -153,20 +153,20 @@ while($comment=$commentResult->fetch_row()){
 </html>
 
 <?php
-function getImages($dbc,$name){
+function getImages(mysqli $dbc,string $name){
     $result=safeSelectQuery($dbc,
         'select * from images where name=?',
         [$name]);
     return $result->fetch_row()[1];
 }
-function getMovie($dbc,$name){
+function getMovie(mysqli $dbc,string $name){
     $result=safeSelectQuery($dbc,
         'select * from cinema where name=?',
         [$name]);
     return $result->fetch_row();
 }
 
-function addCinemaItems($title,$content){
+function addCinemaItems(string $title,string $content){
     echo <<<EOF
     <div class="cinema-item">
         <div class="cinema-item-title">$title</div>
@@ -179,7 +179,7 @@ EOF;
  * @param $comment Comment
  * @return void
  */
-function addCommentCard($comment){
+function addCommentCard(Comment $comment){
     global $user;
     echo <<<EOF
         <div class="comment-card">
@@ -197,13 +197,12 @@ EOF;
     echo <<<EOF
                 </span>
                 <span class="time">{$comment->getTime()}</span>
-                <span class="good"><span class="count">{$comment->getGood()}</span><span class="good-button">赞</span></span>
-                <span class="commentId" hidden>{$comment->getId()}</span>
+                <span class="good"><span class="count">{$comment->getGood()}</span><span data-id="{$comment->getId()}" class="good-button">赞</span></span>
             </div>
             <div class="comment-content">{$comment->getContent()}</div>
 EOF;
     if($user->getPower()==='admin'){
-        echo "<div class='delete-div'><a class='delete-button'>删除</a></div>";
+        echo "<div class='delete-div'><a data-id='{$comment->getId()}' class='delete-button'>删除</a></div>";
     }
      echo   '</div>';
 }
