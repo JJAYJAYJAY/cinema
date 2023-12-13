@@ -40,7 +40,7 @@ items.each(function(index){
             $(this).on('click',function(){
                 clearActive(items);
                 $(this).addClass('active');
-                iframe.attr('src','myCommits.php');
+                iframe.attr('src','myComment.php');
             })
             break;
         case 5:

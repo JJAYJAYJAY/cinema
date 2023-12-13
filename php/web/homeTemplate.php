@@ -42,7 +42,7 @@ $user=$_SESSION['user'];
         </ul>
     </div>
     <div class="right-content">
-        <iframe id="show" src="admin.php"></iframe>
+        <iframe id="show" src="myComment.php"></iframe>
     </div>
 </div>
 </body>

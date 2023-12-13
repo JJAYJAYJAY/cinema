@@ -119,9 +119,21 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding: 10px;
     min-height: 150px;
-    .title{
+    .title {
         font-size: larger;
         color: #459145;
+        .edit-button{
+            float: right;
+            position: relative;
+            top: 3px;
+            right: 10px;
+            font-size: small;
+            color: #cccccc;
+            cursor: pointer;
+        }
+        .edit-button:hover{
+            color: #1196fd;
+        }
     }
     .introduce-content{
         margin-top: 10px;
@@ -183,17 +195,19 @@
     background: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
-.comment-form{
-    display: none;
-    background: #ffffff;
-    width: 700px;
-    height: 330px;
+.form{
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* 添加这一行 */
+    transform: translate(-50%, -50%);
     z-index: 2;
     box-shadow: 0 0 15px #00000050;
+    background: #ffffff;
+    display: none;
+}
+.comment-form{
+    width: 700px;
+    height: 330px;
 }
 .form-header{
     width: 100%;
@@ -223,7 +237,7 @@
     margin-top: 20px;
     margin-left: 20px;
 }
-.form-comment{
+.form-comment,.form-introduce{
     margin-top: 10px;
     resize: none;
     margin-left: 20px;
@@ -232,11 +246,11 @@
     padding: 10px;
     border: 1px solid #cccccc;
 }
-.form-comment:focus-visible{
+.form-comment:focus-visible,.form-introduce:focus-visible {
     outline-offset: 0;
     outline: none;
 }
-.comment-button{
+.comment-button,.edit-submit-button{
     margin-top: 10px;
     margin-left: calc(100% - 70px);
     width: 60px;
@@ -255,7 +269,29 @@
     color: #595959;
     cursor:pointer;
 }
-
 .delete-button:hover{
     color: #1196fd;
+}
+.edit-form{
+    width: 700px;
+    height: 540px;
+}
+.edit-item{
+    display: flex;
+    margin-top: 20px;
+    margin-left: 20px;
+    gap: 5px;
+    height: 30px;
+    .edit-item-title{
+        line-height: 30px;
+    }
+    .edit-item-content{
+        border: 1px solid #ccc;
+        height: 100%;
+        padding-left: 5px;
+        cursor: text;
+    }
+    .edit-item-content:focus-visible{
+        outline: none;
+    }
 }

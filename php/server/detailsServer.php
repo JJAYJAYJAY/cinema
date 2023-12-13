@@ -2,9 +2,13 @@
 /**
  * @var mysqli $dbc
  */
-header("Content-Type: application/json;charset=utf-8");
 require_once '../dataBase/mysqli_connect.php';
-
+header("Content-Type: application/json;charset=utf-8");
+session_start();
+if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
+    header('Location: login.php');
+    exit;
+}
 $addComment=function ($dbc){
     $time=date('Y-m-d H:i:s');
     if(safeBoolQuery($dbc,
@@ -43,11 +47,21 @@ $deleteComment=function ($dbc){
         echo json_encode(['status'=>'fail']);
     }
 };
-
+$edit=function ($dbc){
+    if(safeBoolQuery($dbc,
+        'update cinema set time=?,director=?,country=?,length=?,introduce=? where name=?',
+       [$_POST['time'],$_POST['director'],$_POST['country'],$_POST['length'],$_POST['introduce'],$_POST['cinema']])){
+        echo json_encode(['status'=>'success']);
+    }
+    else{
+        echo json_encode(['status'=>'fail']);
+    }
+};
 $commands=array(
     'addComment'=>$addComment,
     'addGood'=>$addGood,
-    'deleteComment'=>$deleteComment
+    'deleteComment'=>$deleteComment,
+    'edit'=>$edit
 );
 
 

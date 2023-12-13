@@ -34,6 +34,8 @@ while($user=$users->fetch_row()) {
         <tr>
             <th>用户名</th>
             <th>权限</th>
+            <th>邮箱</th>
+            <th>手机号</th>
             <th>修改权限</th>
             <th>删除</th>
         </tr>
@@ -60,6 +62,8 @@ function addUserCard($user)
     <tr class="user-card">
         <td>{$user->getUsername()}</td>
         <td>{$user->getPower()}</td>
+        <td>{$user->getEmail()}</td>
+        <td>{$user->getPhone()}</td>
         <td>
             <button class="change-button" data-id="{$user->getId()}">修改</button>
         </td>

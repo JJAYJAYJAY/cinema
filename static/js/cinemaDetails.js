@@ -1,6 +1,5 @@
 let stars = $('#stars');
 let formStars = $('#formStars');
-
 stars.children().each( (index, element)=>{
     $(element).on('mouseenter', function (){
         $(this).nextAll().attr('src', '../../static/image/star_hollow_hover.png')
@@ -32,12 +31,17 @@ function openForm (){
     $('#overlay').css('display', 'block')
     $('#commentForm').css('display', 'block')
 }
-function closeForm (){
+$.fn.closeForm=function (){
     $('#overlay').css('display', 'none')
-    $('#commentForm').css('display', 'none')
+    this.parent().parent().css('display', 'none')
 }
+
 $('#writeComment').on('click', ()=> openForm());
-$('#formClose').on('click', ()=> closeForm());
+$('.formClose').each((index, element)=>{
+    $(element).on('click', ()=> {
+        $(element).closeForm()
+    })
+});
 stars.children().each((index, element)=>{
     $(element).on('click', ()=>{
         openForm();
@@ -54,10 +58,15 @@ formStars.children().each((index, element)=>{
     });
 });
 
+
 $('#commentButton').on('click', (event)=>{
     event.preventDefault();
-    let form = $('#form');
+    let form = $('#commentForm');
     let data = form.serialize();
+    if(form.find('[name="content"]').val()===''){
+        alert('评论内容不能为空');
+        return;
+    }
     $.ajax({
         url: form.attr('action'),
         type: form.attr('method'),
@@ -65,7 +74,7 @@ $('#commentButton').on('click', (event)=>{
         success: (response)=>{
             if(response.status === 'success'){
                 alert('评论成功');
-                closeForm();
+                form.find('.formClose').closeForm()
                 window.location.reload();
             }else{
                 alert(response.status);
@@ -114,6 +123,29 @@ $('.delete-button').each((index,element)=>{
                     }
                 }
             })
+        }
+    })
+})
+$('.edit-button').on('click',()=>{
+    $('#overlay').css('display', 'block')
+    $('#editForm').css('display', 'block')
+})
+
+$('#editButton').on('click',(event)=>{
+    let form = $('#editForm');
+    let data = form.serialize();
+    $.ajax({
+        url: form.attr('action'),
+        type: form.attr('method'),
+        data: data,
+        success: (response)=>{
+            if(response.status === 'success'){
+                alert('修改成功');
+                form.find('.formClose').closeForm()
+                window.location.reload();
+            }else{
+                alert(response.status);
+            }
         }
     })
 })

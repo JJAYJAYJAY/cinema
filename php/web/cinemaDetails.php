@@ -36,10 +36,9 @@ while($comment=$commentResult->fetch_row()){
 </head>
 <body>
 <div class="overlay" id="overlay"></div>
-<div class="comment-form" id="commentForm">
-    <form id="form" action="../server/detailsServer.php" method="post">
+    <form class="form comment-form" id="commentForm" action="../server/detailsServer.php" method="post">
         <div class="form-header">
-            <span>写评论</span> <a id="formClose">x</a>
+            <span>写评论</span> <a class="formClose">x</a>
         </div>
         <div class="stars-box">
             <span>评价:</span>
@@ -59,7 +58,6 @@ while($comment=$commentResult->fetch_row()){
         <textarea class="form-comment" name="content" id="content" placeholder="写下你的评论..."></textarea>
         <input class="comment-button" type="submit" value="提交" id="commentButton">
     </form>
-</div>
 <div class="header">
     <div class="greet">
         <?php echo 'Hello,'.$user->getUsername(); ?>
@@ -121,7 +119,7 @@ while($comment=$commentResult->fetch_row()){
         </div>
     </div>
     <div class="cinema-introduce">
-        <div class="title">电影简介:</div>
+        <div class="title"><span>电影简介:</span><?php if($user->getPower()==='admin') echo '<span class="edit-button">修改</span>'?></div>
         <div class="introduce-content"><?php echo $cinema->getIntroduce()?></div>
     </div>
     <div class="clearfix">
@@ -142,11 +140,16 @@ while($comment=$commentResult->fetch_row()){
     <div class="comments-box">
         <?php
         foreach ($comments as $comment){
-            addCommentCard($comment);
+            addCommentForm($comment);
         }
         ?>
     </div>
 </div>
+<?php
+if($user->getPower()==='admin'){
+    addEditFrom($cinema);
+}
+?>
 </body>
 <script src="../../static/js/jquery-3.7.1.min.js"></script>
 <script src="../../static/js/cinemaDetails.js"></script>
@@ -165,8 +168,7 @@ function getMovie(mysqli $dbc,string $name){
         [$name]);
     return $result->fetch_row();
 }
-
-function addCinemaItems(string $title,string $content){
+function addCinemaItems(string $title,$content){
     echo <<<EOF
     <div class="cinema-item">
         <div class="cinema-item-title">$title</div>
@@ -174,12 +176,11 @@ function addCinemaItems(string $title,string $content){
     </div>
 EOF;
 }
-
 /**
  * @param $comment Comment
  * @return void
  */
-function addCommentCard(Comment $comment){
+function addCommentForm(Comment $comment){
     global $user;
     echo <<<EOF
         <div class="comment-card">
@@ -206,6 +207,43 @@ EOF;
     }
      echo   '</div>';
 }
+function addEditItems(string $title,string $content,string $type,string $name){
+    echo <<<EOF
+    <div class="edit-item">
+        <div class="edit-item-title">$title</div>
+        <input type="$type" class="edit-item-content" name="$name" value="$content">
+    </div>
+EOF;
+}
 
+/**
+ * @param Cinema $cinema
+ * @return void
+ */
+function addEditFrom(Cinema $cinema){
+    global $name;
+    echo <<<EOF
+        <form class="form edit-form" id="editForm" action="../server/detailsServer.php" method="post">
+            <div class="form-header">
+                <span>编辑</span> <a class="formClose">x</a>
+            </div>
+            <input type="hidden" name="command" value="edit">
+            <input type="hidden" name="cinema" value="$name">
+            <div class="edit-item">
+                <div class="edit-item-title">电影名称:</div>
+                <div style="line-height: 30px">$name</div>
+            </div>
+EOF;
+    addEditItems('上映时间:',$cinema->getTime(),"date","time");
+    addEditItems('导演:',$cinema->getDirector(),"text","director");
+    addEditItems('制片国家/地区:',$cinema->getCountry(),"text","country");
+    addEditItems('电影时长:',$cinema->getLength().'分钟',"text","length");
+    echo <<<EOF
+            <div class="comment-label">电影简介:</div>
+            <textarea class="form-introduce" name="introduce" id="introduce" placeholder="电影简介">{$cinema->getIntroduce()}</textarea>
+            <input class="edit-submit-button" type="submit" value="修改" id="editButton">
+        </form>
 
+EOF;
+}
 ?>

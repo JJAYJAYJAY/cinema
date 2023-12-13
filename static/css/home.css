@@ -68,7 +68,6 @@ body{
         width: 35px;
         height: 35px;
         background: #000000;
-        cursor: pointer;
         backdrop-filter: blur(10px);
         border: none;
         border-radius: 10px;
@@ -79,6 +78,7 @@ body{
         transition: all 0.2s ease-in-out;
         box-shadow: 0 0 10px #ccc;
         .button-content{
+            cursor: pointer;
             opacity: 0;
             user-select: none;
             color: #fff;
