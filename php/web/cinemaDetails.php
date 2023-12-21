@@ -10,12 +10,17 @@ require_once '../dataBase/mysqli_connect.php';
 
 session_start();
 if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
-    header('Location: login.php');
+    header('Location: index.php');
     exit;
 }
 $user=$_SESSION['user'];
 $name=$_GET['name'];
-$cinema=new Cinema(...getMovie($dbc,$name));
+try {
+    $cinema=new Cinema(...getMovie($dbc,$name));
+}catch (Exception $e){
+    header('Location: homeTemplate.php');
+    exit;
+}
 $commentResult=safeSelectQuery($dbc,
     'select * from comment where cinema=?',
     [$name]);
@@ -32,7 +37,6 @@ while($comment=$commentResult->fetch_row()){
     <script src="../../static/js/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="../../static/css/meyer.css">
     <link rel="stylesheet" href="../../static/css/cinemaDetails.css">
-    <link rel="stylesheet" href="../../static/icon/iconfont.css">
 </head>
 <body>
 <div class="overlay" id="overlay"></div>
@@ -162,10 +166,18 @@ function getImages(mysqli $dbc,string $name){
         [$name]);
     return $result->fetch_row()[1];
 }
-function getMovie(mysqli $dbc,string $name){
+
+/**
+ * @throws Exception
+ */
+function getMovie($dbc, $name){
+    if(!is_string($name)||$name==='')
+        throw new Exception('name must be string');
     $result=safeSelectQuery($dbc,
         'select * from cinema where name=?',
         [$name]);
+    if($result->num_rows===0)
+        throw new Exception('no such movie');
     return $result->fetch_row();
 }
 function addCinemaItems(string $title,$content){
@@ -237,7 +249,7 @@ EOF;
     addEditItems('上映时间:',$cinema->getTime(),"date","time");
     addEditItems('导演:',$cinema->getDirector(),"text","director");
     addEditItems('制片国家/地区:',$cinema->getCountry(),"text","country");
-    addEditItems('电影时长:',$cinema->getLength().'分钟',"text","length");
+    addEditItems('电影时长:',$cinema->getLength(),"text","length");
     echo <<<EOF
             <div class="comment-label">电影简介:</div>
             <textarea class="form-introduce" name="introduce" id="introduce" placeholder="电影简介">{$cinema->getIntroduce()}</textarea>

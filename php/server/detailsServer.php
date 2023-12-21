@@ -6,7 +6,7 @@ require_once '../dataBase/mysqli_connect.php';
 header("Content-Type: application/json;charset=utf-8");
 session_start();
 if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
-    header('Location: login.php');
+    header('Location: index.php');
     exit;
 }
 $addComment=function ($dbc){

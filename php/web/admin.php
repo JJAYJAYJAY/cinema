@@ -5,9 +5,10 @@
  */
 require_once '../dataBase/mysqli_connect.php';
 require_once '../class/User.php';
+
 session_start();
 if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
-    header('Location: login.php');
+    header('Location: index.php');
     exit;
 }
 $users=safeSelectQuery($dbc,'select * from users');
@@ -25,7 +26,6 @@ while($user=$users->fetch_row()) {
     <script src="../../static/js/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="../../static/css/meyer.css">
     <link rel="stylesheet" href="../../static/css/admin.css">
-    <link rel="stylesheet" href="../../static/icon/iconfont.css">
 </head>
 <body>
 <div class="header">用户管理</div>

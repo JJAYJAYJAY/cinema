@@ -1,3 +1,43 @@
+let btn = $('.control a');
+let loginForm = $('.form-login');
+let regiserForm = $('.form-register');
+let photo = $('.div-description');
+
+btn.eq(0).on('click', function(e) {
+    loginForm.removeClass('div-form-left').addClass('div-form-hidden');
+    regiserForm.removeClass('div-form-hidden').addClass('div-form-right');
+    photo.addClass('div-description-left').removeClass('div-description-right');
+});
+btn.eq(1).on('click', function(e) {
+    loginForm.removeClass('div-form-hidden').addClass('div-form-left');
+    regiserForm.removeClass('div-form-right').addClass('div-form-hidden');
+    photo.addClass('div-description-right').removeClass('div-description-left');
+});
+
+$("#loginButton").on("click", function (e) {
+    e.preventDefault();
+    let form = $(".form-login");
+    // Get form data
+    let formData = form.serialize();
+
+    // Ajax request
+    $.ajax({
+        type: "POST",
+        url: form.attr("action"),
+        data: formData,
+        success: function(response) {
+            if (response.status === 'success') {
+                window.location.href = 'homeTemplate.php';
+            } else {
+                alert("用户名或密码错误")
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log("Ajax request failed: ", textStatus, errorThrown);
+        }
+    });
+});
+
 let inputBoxes= $(".input-box");
 inputBoxes.on("focus", "input", function () {
     $(this).next().removeClass("error");
@@ -107,10 +147,10 @@ function checkAll(inputBoxes) {
     });
     return flag;
 }
-$("#register").on("click", function (e) {
+$("#registerButton").on("click", function (e) {
     e.preventDefault();
     if(checkAll(inputBoxes)){
-        let form = $("#register-form");
+        let form = $(".form-register");
         // Get form data
         let formData = form.serialize();
         $.ajax({
@@ -119,7 +159,7 @@ $("#register").on("click", function (e) {
             data: formData,
             success: function(response) {
                 if (response.status === 'success') {
-                    window.location.href = 'login.php';
+                    alert("注册成功");
                 } else {
                     alert(response.message)
                 }
@@ -131,4 +171,3 @@ $("#register").on("click", function (e) {
         })
     }
 });
-
