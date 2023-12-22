@@ -7,7 +7,6 @@ header("Content-Type: application/json;charset=utf-8");
 session_start();
 if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
     header('Location: ../web/login.php');
-    exit;
 }
 $changePower=function ($dbc){
     if(safeBoolQuery($dbc,

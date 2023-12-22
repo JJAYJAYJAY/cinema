@@ -3,9 +3,10 @@
  * @var User $user
  */
 require_once '../class/User.php';
+
 session_start();
 if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
-    header('Location: login.php');
+    header('Location: index.php');
     exit;
 }
 $user=$_SESSION['user'];
@@ -19,7 +20,6 @@ $user=$_SESSION['user'];
     <script src="../../static/js/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="../../static/css/meyer.css">
     <link rel="stylesheet" href="../../static/css/homeTemplate.css">
-    <link rel="stylesheet" href="../../static/icon/iconfont.css">
 </head>
 <body>
 <div class="header">
@@ -31,7 +31,6 @@ $user=$_SESSION['user'];
     <div class="left-menu">
         <ul>
             <li class="menu-item active">首页</li>
-            <li class="menu-item ">排行榜</li>
             <li class="menu-item">搜索</li>
             <li class="menu-item">个人信息</li>
             <li class="menu-item">我的评论</li>
@@ -42,7 +41,7 @@ $user=$_SESSION['user'];
         </ul>
     </div>
     <div class="right-content">
-        <iframe id="show" src="myComment.php"></iframe>
+        <iframe id="show" src="home.php"></iframe>
     </div>
 </div>
 </body>
