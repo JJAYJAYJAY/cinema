@@ -7,10 +7,6 @@ require_once '../dataBase/mysqli_connect.php';
 require_once '../dataBase/checkInvalid.php';
 session_start();
 header('Content-Type:application/json; charset=utf-8');
-if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
-    header('Location: index.php');
-    exit;
-}
 if(isset($_SERVER['HTTP_X_REQUESTED_WITH'])&&$_SERVER['REQUEST_METHOD']=='POST') {
     $username=$_POST['username'];
     if(checkInput($dbc,$username,'checkUsername','用户名已存在！')){

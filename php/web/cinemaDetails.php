@@ -155,10 +155,10 @@ if($user->getPower()==='admin'){
     addEditFrom($cinema);
 }
 ?>
-</body>
 <script src="../../static/js/jquery-3.7.1.min.js"></script>
 <script src="../../static/js/cinemaDetails.js"></script>
 <script src="../../static/js/commentForm.js"> </script>
+</body>
 </html>
 
 <?php
@@ -221,7 +221,7 @@ EOF;
     }
      echo   '</div>';
 }
-function addEditItems(string $title,string $content,string $type,string $name){
+function addEditItems(string $title,$content,string $type,string $name){
     echo <<<EOF
     <div class="edit-item">
         <div class="edit-item-title">$title</div>
@@ -257,7 +257,6 @@ EOF;
             <textarea class="form-introduce" name="introduce" id="introduce" placeholder="电影简介">{$cinema->getIntroduce()}</textarea>
             <input class="edit-submit-button" type="submit" value="修改" id="editButton">
         </form>
-
 EOF;
 }
 ?>

@@ -27,7 +27,7 @@
 }
 .cinema-box{
     display: flex;
-    width: 70%;
+    width: 700px;
     min-width: 670px;
     padding: 10px;
     border-radius: 10px;
@@ -112,7 +112,7 @@
     }
 }
 .cinema-introduce{
-    width: 70%;
+    width: 700px;
     min-width: 670px;
     margin-top: 20px;
     border-radius: 15px;
@@ -145,7 +145,7 @@
 .comments-box{
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 689px;
     min-width: 670px;
     .comment-card{
         width: 100%;
@@ -164,8 +164,7 @@
                 color: #808080;
             }
             .good{
-                position: absolute;
-                left: 870px;
+                margin-left: 53%;
                 font-size: small;
                 .good-button{
                     color: #1b78da;
