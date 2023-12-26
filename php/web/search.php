@@ -13,6 +13,7 @@ if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
     <title>Document</title>
     <link rel="stylesheet" href="../../static/css/meyer.css">
     <link rel="stylesheet" href="../../static/css/search.css">
+    <link rel="stylesheet" href="../../static/css/cinemaCard.css">
 </head>
 <body>
 <div class="header">

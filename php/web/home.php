@@ -18,6 +18,7 @@ require_once '../dataBase/mysqli_connect.php';
     <script src="../../static/js/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="../../static/css/meyer.css">
     <link rel="stylesheet" href="../../static/css/home.css">
+    <link rel="stylesheet" href="../../static/css/cinemaCard.css">
 </head>
 <body>
 <h1 class="header">近期上新</h1>
