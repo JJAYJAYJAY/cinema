@@ -71,6 +71,7 @@ $user=$_SESSION['user'];
  * @return void
  */
 function addMyComment(Comment $comment){
+    $content=nl2br($comment->getContent());
     echo <<<EOF
     <div class="comment-card">
         <div class="comment-header">
@@ -94,7 +95,7 @@ EOF;
     echo <<<EOF
             </span>
             <div class="comment-text">
-                <span>{$comment->getContent()}</span>
+                <span>$content</span>
             </div>
         </div>
         <div class="comment-tail">

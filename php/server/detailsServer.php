@@ -13,7 +13,7 @@ $addComment=function ($dbc){
     $time=date('Y-m-d H:i:s');
     if(safeBoolQuery($dbc,
         'insert into comment (who,cinema,score,time,good,content) values (?,?,?,?,?,?)',
-        [$_POST['who'], $_POST['cinema'], (int)$_POST['score'], $time, 0, $_POST['content']])){
+        [$_POST['who'],$_POST['cinema'],$_POST['score'],$time,0,$_POST['content']])){
         echo json_encode(['status'=>'success']);
     }
     else{
