@@ -92,8 +92,9 @@ while($comment=$commentResult->fetch_row()){
             </div>
             <div class="score">
                 <?php
+                    $count=count($comments);
                     $average = 0;
-                    if(count($comments)==0){
+                    if($count==0){
                         echo "暂无评分";
                     }else {
                         /**
@@ -121,6 +122,7 @@ while($comment=$commentResult->fetch_row()){
                 <img class="star" src="../../static/image/star_onmouseover.png" alt="">
                 <img class="star" src="../../static/image/star_onmouseover.png" alt="">
             </div>
+            <div class="count">总计<?php echo $count?>条评论</div>
         </div>
     </div>
     <div class="cinema-introduce">
@@ -196,7 +198,8 @@ EOF;
  */
 function addCommentCard(Comment $comment){
     global $user;
-    $content=nl2br($comment->getContent());
+    $content= htmlspecialchars($comment->getContent(), ENT_QUOTES, 'UTF-8');
+    $content=nl2br($content);
     echo <<<EOF
         <div class="comment-card">
             <div class="small-title">
@@ -213,7 +216,7 @@ EOF;
     echo <<<EOF
                 </span>
                 <span class="time">{$comment->getTime()}</span>
-                <span class="good"><span class="count">{$comment->getGood()}</span><span data-id="{$comment->getId()}" class="good-button">赞</span></span>
+                <span class="good"><span>{$comment->getGood()}</span><span data-id="{$comment->getId()}" class="good-button">赞</span></span>
             </div>
             <div class="comment-content">$content</div>
 EOF;

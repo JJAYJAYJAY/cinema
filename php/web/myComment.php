@@ -71,7 +71,8 @@ $user=$_SESSION['user'];
  * @return void
  */
 function addMyComment(Comment $comment){
-    $content=nl2br($comment->getContent());
+    $content= htmlspecialchars($comment->getContent(), ENT_QUOTES, 'UTF-8');
+    $content=nl2br($content);
     echo <<<EOF
     <div class="comment-card">
         <div class="comment-header">
