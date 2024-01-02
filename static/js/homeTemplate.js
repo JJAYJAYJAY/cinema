@@ -26,17 +26,10 @@ items.each(function(index){
             $(this).on('click',function(){
                 clearActive(items);
                 $(this).addClass('active');
-                iframe.attr('src','mine.php');
-            })
-            break;
-        case 3:
-            $(this).on('click',function(){
-                clearActive(items);
-                $(this).addClass('active');
                 iframe.attr('src','myComment.php');
             })
             break;
-        case 4:
+        case 3:
             $(this).on('click',function(){
                 clearActive(items);
                 $(this).addClass('active');

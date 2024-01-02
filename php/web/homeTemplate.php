@@ -32,7 +32,6 @@ $user=$_SESSION['user'];
         <ul>
             <li class="menu-item active">首页</li>
             <li class="menu-item">搜索</li>
-            <li class="menu-item">个人信息</li>
             <li class="menu-item">我的评论</li>
             <?php
             if($user->getPower()=='admin')
