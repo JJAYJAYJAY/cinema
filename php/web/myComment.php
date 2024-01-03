@@ -71,6 +71,8 @@ $user=$_SESSION['user'];
  * @return void
  */
 function addMyComment(Comment $comment){
+    $content= htmlspecialchars($comment->getContent(), ENT_QUOTES, 'UTF-8');
+    $content=nl2br($content);
     echo <<<EOF
     <div class="comment-card">
         <div class="comment-header">
@@ -94,7 +96,7 @@ EOF;
     echo <<<EOF
             </span>
             <div class="comment-text">
-                <span>{$comment->getContent()}</span>
+                <span>$content</span>
             </div>
         </div>
         <div class="comment-tail">

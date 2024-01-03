@@ -48,7 +48,7 @@ while($comment=$commentResult->fetch_row()){
     <div class="stars-box">
         <span>评价:</span>
         <div class="stars" id="formStars">
-            <img class="star" src="../../static/image/star_hollow_hover.png" alt="">
+            <img class="star" src="../../static/image/star_onmouseover.png" alt="">
             <img class="star" src="../../static/image/star_hollow_hover.png" alt="">
             <img class="star" src="../../static/image/star_hollow_hover.png" alt="">
             <img class="star" src="../../static/image/star_hollow_hover.png" alt="">
@@ -60,7 +60,7 @@ while($comment=$commentResult->fetch_row()){
     <input type="hidden" name="score" id="starsInput" value="2">
     <input type="hidden" name="cinema" value="<?php echo $name?>">
     <div class="comment-label">简短评论:</div>
-    <textarea class="form-comment" name="content" id="content" placeholder="写下你的评论..."></textarea>
+    <label for="content"></label><textarea class="form-comment" name="content" id="content" placeholder="写下你的评论..."></textarea>
     <input class="comment-button" type="submit" value="提交" id="commentButton">
 </form>
 <div class="header">
@@ -92,8 +92,9 @@ while($comment=$commentResult->fetch_row()){
             </div>
             <div class="score">
                 <?php
+                    $count=count($comments);
                     $average = 0;
-                    if(count($comments)==0){
+                    if($count==0){
                         echo "暂无评分";
                     }else {
                         /**
@@ -121,11 +122,12 @@ while($comment=$commentResult->fetch_row()){
                 <img class="star" src="../../static/image/star_onmouseover.png" alt="">
                 <img class="star" src="../../static/image/star_onmouseover.png" alt="">
             </div>
+            <div class="count">总计<?php echo $count?>条评论</div>
         </div>
     </div>
     <div class="cinema-introduce">
         <div class="title"><span>电影简介:</span><?php if($user->getPower()==='admin') echo '<span class="edit-button">修改</span>'?></div>
-        <div class="introduce-content"><?php echo $cinema->getIntroduce()?></div>
+        <div class="introduce-content"><?php echo nl2br($cinema->getIntroduce())?></div>
     </div>
     <div class="clearfix">
         <div class="stars-box">
@@ -155,10 +157,10 @@ if($user->getPower()==='admin'){
     addEditFrom($cinema);
 }
 ?>
-</body>
 <script src="../../static/js/jquery-3.7.1.min.js"></script>
 <script src="../../static/js/cinemaDetails.js"></script>
 <script src="../../static/js/commentForm.js"> </script>
+</body>
 </html>
 
 <?php
@@ -196,6 +198,8 @@ EOF;
  */
 function addCommentCard(Comment $comment){
     global $user;
+    $content= htmlspecialchars($comment->getContent(), ENT_QUOTES, 'UTF-8');
+    $content=nl2br($content);
     echo <<<EOF
         <div class="comment-card">
             <div class="small-title">
@@ -212,16 +216,16 @@ EOF;
     echo <<<EOF
                 </span>
                 <span class="time">{$comment->getTime()}</span>
-                <span class="good"><span class="count">{$comment->getGood()}</span><span data-id="{$comment->getId()}" class="good-button">赞</span></span>
+                <span class="good"><span>{$comment->getGood()}</span><span data-id="{$comment->getId()}" class="good-button">赞</span></span>
             </div>
-            <div class="comment-content">{$comment->getContent()}</div>
+            <div class="comment-content">$content</div>
 EOF;
     if($user->getPower()==='admin'){
         echo "<div class='delete-div'><a data-id='{$comment->getId()}' class='delete-button'>删除</a></div>";
     }
      echo   '</div>';
 }
-function addEditItems(string $title,string $content,string $type,string $name){
+function addEditItems(string $title,$content,string $type,string $name){
     echo <<<EOF
     <div class="edit-item">
         <div class="edit-item-title">$title</div>
@@ -257,7 +261,6 @@ EOF;
             <textarea class="form-introduce" name="introduce" id="introduce" placeholder="电影简介">{$cinema->getIntroduce()}</textarea>
             <input class="edit-submit-button" type="submit" value="修改" id="editButton">
         </form>
-
 EOF;
 }
 ?>

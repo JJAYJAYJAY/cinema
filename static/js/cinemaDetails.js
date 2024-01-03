@@ -40,7 +40,7 @@ $('.good-button').each((index, element)=>{
             },
             success: (response)=>{
                 if(response.status === 'success'){
-                    window.location.reload();
+                    $(element).siblings('span').text(parseInt($(element).siblings('span').text())+1)
                 }else{}
             }
         })
