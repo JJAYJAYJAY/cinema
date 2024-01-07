@@ -31,7 +31,7 @@ $user=$_SESSION['user'];
         if($result->num_rows>0){
             while ($row=$result->fetch_row()){
                 $comment=new Comment(...$row);
-                addMyComment($comment);
+                echo addMyComment($comment);
             }
         }else{
             echo '<div style="text-align: center;width: 100%;color: #6e6e6e">你还没有评论哦</div>';
@@ -70,10 +70,20 @@ $user=$_SESSION['user'];
  * @param $comment Comment
  * @return void
  */
-function addMyComment(Comment $comment){
-    $content= htmlspecialchars($comment->getContent(), ENT_QUOTES, 'UTF-8');
-    $content=nl2br($content);
-    echo <<<EOF
+function addMyComment(Comment $comment): string {
+    $content = htmlspecialchars($comment->getContent(), ENT_QUOTES, 'UTF-8');
+    $content = nl2br($content);
+    $n = $comment->getScore() / 2;
+    $stars = '';
+    for ($i = 0; $i < 5; $i++) {
+        if ($i < $n) {
+            $stars .= '<img class="star" src="../../static/image/star_onmouseover.png" alt="">';
+        } else {
+            $stars .= '<img class="star" src="../../static/image/star_hollow_hover.png" alt="">';
+        }
+    }
+
+    return <<<EOF
     <div class="comment-card">
         <div class="comment-header">
             <span class="comment-user">
@@ -85,15 +95,7 @@ function addMyComment(Comment $comment){
         <div class="comment-content">
             <span class="stars">
             <span class="score" hidden>{$comment->getScore()}</span>
-EOF;
-            $n=$comment->getScore()/2;
-            for($i=0;$i<5;$i++){
-                if($i<$n)
-                    echo '<img class="star" src="../../static/image/star_onmouseover.png" alt="">';
-                else
-                    echo '<img class="star" src="../../static/image/star_hollow_hover.png" alt="">';
-            }
-    echo <<<EOF
+            $stars
             </span>
             <div class="comment-text">
                 <span>$content</span>

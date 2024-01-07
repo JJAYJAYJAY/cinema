@@ -147,7 +147,7 @@ while($comment=$commentResult->fetch_row()){
     <div class="comments-box">
         <?php
         foreach ($comments as $comment){
-            addCommentCard($comment);
+            echo addCommentCard($comment);
         }
         ?>
     </div>
@@ -192,39 +192,43 @@ function addCinemaItems(string $title,$content){
     </div>
 EOF;
 }
-/**
- * @param $comment Comment
- * @return void
- */
 function addCommentCard(Comment $comment){
     global $user;
     $content= htmlspecialchars($comment->getContent(), ENT_QUOTES, 'UTF-8');
     $content=nl2br($content);
-    echo <<<EOF
-        <div class="comment-card">
-            <div class="small-title">
-                <span class="who">{$comment->getWho()}</span>
-                <span class="stars">
-EOF;
     $n=$comment->getScore()/2;
-    for($i=0;$i<5;$i++){
-        if($i<$n)
-            echo '<img class="star" src="../../static/image/star_onmouseover.png" alt="">';
-        else
-            echo '<img class="star" src="../../static/image/star_hollow_hover.png" alt="">';
-    }
-    echo <<<EOF
-                </span>
-                <span class="time">{$comment->getTime()}</span>
-                <span class="good"><span>{$comment->getGood()}</span><span data-id="{$comment->getId()}" class="good-button">赞</span></span>
-            </div>
-            <div class="comment-content">$content</div>
-EOF;
-    if($user->getPower()==='admin'){
-        echo "<div class='delete-div'><a data-id='{$comment->getId()}' class='delete-button'>删除</a></div>";
-    }
-     echo   '</div>';
+    $commentId = $comment->getId();
+    $who = $comment->getWho();
+    $time = $comment->getTime();
+    $good = $comment->getGood();
+    $isAdmin = $user->getPower()==='admin';
+    ob_start();
+?>
+    <div class="comment-card">
+        <div class="small-title">
+            <span class="who"><?= $who ?></span>
+            <span class="stars">
+                <?php for($i=0;$i<5;$i++): ?>
+                    <?php if($i<$n): ?>
+                        <img class="star" src="../../static/image/star_onmouseover.png" alt="">
+                    <?php else: ?>
+                        <img class="star" src="../../static/image/star_hollow_hover.png" alt="">
+                    <?php endif; ?>
+                <?php endfor; ?>
+            </span>
+            <span class="time"><?= $time ?></span>
+            <span class="good"><span><?= $good ?></span><span data-id="<?= $commentId ?>" class="good-button">赞</span></span>
+        </div>
+        <div class="comment-content"><?= $content ?></div>
+        <?php if($isAdmin): ?>
+            <div class='delete-div'><a data-id='<?= $commentId ?>' class='delete-button'>删除</a></div>
+        <?php endif; ?>
+    </div>
+<?php
+    return ob_get_clean();
 }
+
+
 function addEditItems(string $title,$content,string $type,string $name){
     echo <<<EOF
     <div class="edit-item">

@@ -73,7 +73,7 @@ $('.edit-button').on('click',()=>{
     $('#editForm').css('display', 'block')
 })
 
-$('#editButton').on('click',(event)=>{
+$('#editButton').on('click',()=>{
     let form = $('#editForm');
     let data = form.serialize();
     $.ajax({
