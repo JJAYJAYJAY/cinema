@@ -38,7 +38,7 @@
     width: 25%;
     height: 30px;
 }
-.delete-button, .change-button{
+.cinema-delete-button, .change-button{
     width: 70%;
     height: 25px;
     background: #dedede;
@@ -47,7 +47,7 @@
     color: #6e6e6e;
     cursor: pointer;
 }
-.delete-button:hover, .change-button:hover{
+.cinema-delete-button:hover, .change-button:hover{
     background:linear-gradient(0deg, #989797, #090909);
     color: #ffffff;
 }

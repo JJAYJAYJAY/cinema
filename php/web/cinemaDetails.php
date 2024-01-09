@@ -7,7 +7,7 @@ require_once '../class/User.php';
 require_once '../class/Comment.php';
 require_once '../class/Cinema.php';
 require_once '../dataBase/mysqli_connect.php';
-
+require_once 'webFun.php';
 session_start();
 if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
     header('Location: index.php');
@@ -154,7 +154,7 @@ while($comment=$commentResult->fetch_row()){
 </div>
 <?php
 if($user->getPower()==='admin'){
-    addEditFrom($cinema);
+    addEditFrom($cinema,'../server/detailsServer.php');
 }
 ?>
 <script src="../../static/js/jquery-3.7.1.min.js"></script>
@@ -163,108 +163,4 @@ if($user->getPower()==='admin'){
 </body>
 </html>
 
-<?php
-function getImages(mysqli $dbc,string $name){
-    $result=safeSelectQuery($dbc,
-        'select * from images where name=?',
-        [$name]);
-    return $result->fetch_row()[1];
-}
 
-/**
- * @throws Exception
- */
-function getMovie($dbc, $name){
-    if(!is_string($name)||$name==='')
-        throw new Exception('name must be string');
-    $result=safeSelectQuery($dbc,
-        'select * from cinema where name=?',
-        [$name]);
-    if($result->num_rows===0)
-        throw new Exception('no such movie');
-    return $result->fetch_row();
-}
-function addCinemaItems(string $title,$content){
-    echo <<<EOF
-    <div class="cinema-item">
-        <div class="cinema-item-title">$title</div>
-        <div class="cinema-item-content">$content</div>
-    </div>
-EOF;
-}
-function addCommentCard(Comment $comment){
-    global $user;
-    $content= htmlspecialchars($comment->getContent(), ENT_QUOTES, 'UTF-8');
-    $content=nl2br($content);
-    $n=$comment->getScore()/2;
-    $commentId = $comment->getId();
-    $who = $comment->getWho();
-    $time = $comment->getTime();
-    $good = $comment->getGood();
-    $isAdmin = $user->getPower()==='admin';
-    ob_start();
-?>
-    <div class="comment-card">
-        <div class="small-title">
-            <span class="who"><?= $who ?></span>
-            <span class="stars">
-                <?php for($i=0;$i<5;$i++): ?>
-                    <?php if($i<$n): ?>
-                        <img class="star" src="../../static/image/star_onmouseover.png" alt="">
-                    <?php else: ?>
-                        <img class="star" src="../../static/image/star_hollow_hover.png" alt="">
-                    <?php endif; ?>
-                <?php endfor; ?>
-            </span>
-            <span class="time"><?= $time ?></span>
-            <span class="good"><span><?= $good ?></span><span data-id="<?= $commentId ?>" class="good-button">赞</span></span>
-        </div>
-        <div class="comment-content"><?= $content ?></div>
-        <?php if($isAdmin): ?>
-            <div class='delete-div'><a data-id='<?= $commentId ?>' class='delete-button'>删除</a></div>
-        <?php endif; ?>
-    </div>
-<?php
-    return ob_get_clean();
-}
-
-
-function addEditItems(string $title,$content,string $type,string $name){
-    echo <<<EOF
-    <div class="edit-item">
-        <div class="edit-item-title">$title</div>
-        <input type="$type" class="edit-item-content" name="$name" value="$content">
-    </div>
-EOF;
-}
-
-/**
- * @param Cinema $cinema
- * @return void
- */
-function addEditFrom(Cinema $cinema){
-    global $name;
-    echo <<<EOF
-        <form class="form edit-form" id="editForm" action="../server/detailsServer.php" method="post">
-            <div class="form-header">
-                <span>编辑</span> <a class="formClose">x</a>
-            </div>
-            <input type="hidden" name="command" value="edit">
-            <input type="hidden" name="cinema" value="$name">
-            <div class="edit-item">
-                <div class="edit-item-title">电影名称:</div>
-                <div style="line-height: 30px">$name</div>
-            </div>
-EOF;
-    addEditItems('上映时间:',$cinema->getTime(),"date","time");
-    addEditItems('导演:',$cinema->getDirector(),"text","director");
-    addEditItems('制片国家/地区:',$cinema->getCountry(),"text","country");
-    addEditItems('电影时长:',$cinema->getLength(),"text","length");
-    echo <<<EOF
-            <div class="comment-label">电影简介:</div>
-            <textarea class="form-introduce" name="introduce" id="introduce" placeholder="电影简介">{$cinema->getIntroduce()}</textarea>
-            <input class="edit-submit-button" type="submit" value="修改" id="editButton">
-        </form>
-EOF;
-}
-?>

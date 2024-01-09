@@ -47,7 +47,7 @@ $('.good-button').each((index, element)=>{
     })
 })
 
-$('.delete-button').each((index,element)=>{
+$('.cinema-delete-button').each((index,element)=>{
     $(element).on('click',()=>{
         //二次确认弹窗
         if(confirm('确认删除该评论？')) {

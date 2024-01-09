@@ -8,6 +8,7 @@ if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
     exit;
 }
 require_once '../dataBase/mysqli_connect.php';
+require_once 'webFun.php'
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,30 +35,5 @@ require_once '../dataBase/mysqli_connect.php';
 </body>
 <script src="../../static/js/jquery-3.7.1.min.js"></script>
 </html>
-<?php
-/**
- * @param $dbc mysqli
- * @param $name string
- * @return void
- */
-function addCinemaCard(mysqli $dbc, string $name){
-    $result=safeSelectQuery($dbc,
-        'select * from images where name=?',
-        [$name]);
-    echo <<<EOF
-    <div class="cinema-card">
-        <div class="cinema-image">
-            <img src="../../{$result->fetch_row()[1]}" alt="加载失败">
-        </div>
-        <div class="content">
-            <div class="cinema-name">$name</div>
-        <div class="button-div">
-            <a href="cinemaDetails.php?name=$name" target="_blank" class="go-button">
-                <span class="button-content">查看详情</span>
-            </a>
-        </div>       
-        </div>
-    </div>
-EOF;
-    }
+
 

@@ -36,6 +36,7 @@ $user=$_SESSION['user'];
             <?php
             if($user->getPower()=='admin')
                 echo '<li class="menu-item">管理员</li>';
+                echo '<li class="menu-item">电影管理</li>';
             ?>
         </ul>
     </div>

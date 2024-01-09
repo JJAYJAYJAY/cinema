@@ -6,8 +6,18 @@
 require_once '../class/User.php';
 require_once '../dataBase/mysqli_connect.php';
 require_once '../class/Comment.php';
+require_once 'webFun.php';
 session_start();
 $user=$_SESSION['user'];
+$page = $_GET['page'] ?? 1;
+$perPageSize = 10;
+$offset = ($page - 1) * $perPageSize;
+$result=safeSelectQuery($dbc,'select * from comment where who=? order by time desc limit ?,?',[$user->getUsername(),$offset,$perPageSize]);
+$comments=[];
+while($row=$result->fetch_row()){
+    $comments[]=new Comment(...$row);
+}
+$totalPage = ceil(safeSelectQuery($dbc, 'select count(*) from comment where who=?',[$user->getUsername()])->fetch_row()[0] / $perPageSize);
 
 ?>
 <!DOCTYPE html>
@@ -19,23 +29,25 @@ $user=$_SESSION['user'];
     <script src="../../static/js/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="../../static/css/meyer.css">
     <link rel="stylesheet" href="../../static/css/myComment.css">
+    <link rel="stylesheet" href="../../static/css/page.css">
     <link rel="stylesheet" href="../../static/css/commentForm.css">
 </head>
 <body>
     <div class="header">我的评论</div>
     <div class="comment-box">
         <?php
-        $result=safeSelectQuery($dbc,
-            'select * from comment where who=? order by time desc',
-            [$user->getUsername()]);
-        if($result->num_rows>0){
-            while ($row=$result->fetch_row()){
-                $comment=new Comment(...$row);
-                echo addMyComment($comment);
-            }
+        if(count($comments)>0){
+           foreach ($comments as $comment) {
+               echo addMyComment($comment);
+           }
         }else{
             echo '<div style="text-align: center;width: 100%;color: #6e6e6e">你还没有评论哦</div>';
         }
+        ?>
+    </div>
+    <div class="page">
+        <?php
+        echo addPagination($page, $totalPage);
         ?>
     </div>
     <div class="overlay" id="overlay"></div>
@@ -65,47 +77,3 @@ $user=$_SESSION['user'];
 <script src="../../static/js/myComment.js"></script>
 <script src="../../static/js/commentForm.js"> </script>
 </html>
-<?php
-/**
- * @param $comment Comment
- * @return void
- */
-function addMyComment(Comment $comment): string {
-    $content = htmlspecialchars($comment->getContent(), ENT_QUOTES, 'UTF-8');
-    $content = nl2br($content);
-    $n = $comment->getScore() / 2;
-    $stars = '';
-    for ($i = 0; $i < 5; $i++) {
-        if ($i < $n) {
-            $stars .= '<img class="star" src="../../static/image/star_onmouseover.png" alt="">';
-        } else {
-            $stars .= '<img class="star" src="../../static/image/star_hollow_hover.png" alt="">';
-        }
-    }
-
-    return <<<EOF
-    <div class="comment-card">
-        <div class="comment-header">
-            <span class="comment-user">
-                <span>{$comment->getWho()}</span>
-            </span>
-            <span class="delete-comment" comment-id="{$comment->getId()}">删除</span>
-            <span class="edit-comment" comment-id="{$comment->getId()}">修改</span>
-        </div>
-        <div class="comment-content">
-            <span class="stars">
-            <span class="score" hidden>{$comment->getScore()}</span>
-            $stars
-            </span>
-            <div class="comment-text">
-                <span>$content</span>
-            </div>
-        </div>
-        <div class="comment-tail">
-             <span class="comment-time">{$comment->getTime()}</span>·
-             <span>{$comment->getCinema()}</span>·
-            <span>{$comment->getGood()}赞</span>
-        </div>
-    </div>
-EOF;
-}

@@ -183,26 +183,6 @@
         }
     }
 }
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1;
-}
-.form{
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    box-shadow: 0 0 15px #00000050;
-    background: #ffffff;
-    display: none;
-}
 .comment-form{
     width: 700px;
     height: 330px;
@@ -212,12 +192,12 @@
     text-align: right;
     padding-right: 20px;
 }
-.delete-button{
+.cinema-delete-button{
     font-size: x-small;
     color: #595959;
     cursor:pointer;
 }
-.delete-button:hover{
+.cinema-delete-button:hover{
     color: #1196fd;
 }
 .edit-form{

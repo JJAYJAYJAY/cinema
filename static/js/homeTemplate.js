@@ -36,6 +36,13 @@ items.each(function(index){
                 iframe.attr('src','admin.php');
             })
             break;
+        case 4:
+            $(this).on('click',function(){
+                clearActive(items);
+                $(this).addClass('active');
+                iframe.attr('src','cinema.php');
+            })
+            break;
     }
 })
 
