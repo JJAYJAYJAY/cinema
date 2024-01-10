@@ -3,12 +3,12 @@ let loginForm = $('.form-login');
 let regiserForm = $('.form-register');
 let photo = $('.div-description');
 
-btn.eq(0).on('click', function(e) {
+btn.eq(0).on('click', function() {
     loginForm.removeClass('div-form-left').addClass('div-form-hidden');
     regiserForm.removeClass('div-form-hidden').addClass('div-form-right');
     photo.addClass('div-description-left').removeClass('div-description-right');
 });
-btn.eq(1).on('click', function(e) {
+btn.eq(1).on('click', function() {
     loginForm.removeClass('div-form-hidden').addClass('div-form-left');
     regiserForm.removeClass('div-form-right').addClass('div-form-hidden');
     photo.addClass('div-description-right').removeClass('div-description-left');
@@ -17,14 +17,12 @@ btn.eq(1).on('click', function(e) {
 $("#loginButton").on("click", function (e) {
     e.preventDefault();
     let form = $(".form-login");
-    // Get form data
-    let formData = form.serialize();
-
+    let formDataObject = passwordMd5(form);
     // Ajax request
     $.ajax({
         type: "POST",
         url: form.attr("action"),
-        data: formData,
+        data: formDataObject,
         success: function(response) {
             if (response.status === 'success') {
                 window.location.href = 'homeTemplate.php';
@@ -151,12 +149,11 @@ $("#registerButton").on("click", function (e) {
     e.preventDefault();
     if(checkAll(inputBoxes)){
         let form = $(".form-register");
-        // Get form data
-        let formData = form.serialize();
+        let formDataObject= passwordMd5(form);
         $.ajax({
             url: form.attr("action"),
             type: "POST",
-            data: formData,
+            data: formDataObject,
             success: function(response) {
                 if (response.status === 'success') {
                     alert("注册成功");
@@ -171,3 +168,16 @@ $("#registerButton").on("click", function (e) {
         })
     }
 });
+function passwordMd5(form){
+    let formDataArray = form.serializeArray();
+
+    let formDataObject = {};
+    formDataArray.forEach(item => {
+        formDataObject[item.name] = item.value;
+    });
+
+    if (formDataObject.password) {
+        formDataObject.password = CryptoJS.MD5(formDataObject.password).toString();
+    }
+    return formDataObject;
+}

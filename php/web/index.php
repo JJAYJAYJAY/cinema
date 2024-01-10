@@ -50,6 +50,7 @@
     </form>
 </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 <script src="../../static/js/jquery-3.7.1.min.js"></script>
 <script src="../../static/js/index.js"></script>
 </html>

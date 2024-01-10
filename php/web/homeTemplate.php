@@ -31,12 +31,14 @@ $user=$_SESSION['user'];
     <div class="left-menu">
         <ul>
             <li class="menu-item active">首页</li>
+            <li class="menu-item ">所有电影</li>
             <li class="menu-item">搜索</li>
             <li class="menu-item">我的评论</li>
             <?php
-            if($user->getPower()=='admin')
+            if($user->getPower()=='admin') {
                 echo '<li class="menu-item">管理员</li>';
                 echo '<li class="menu-item">电影管理</li>';
+            }
             ?>
         </ul>
     </div>

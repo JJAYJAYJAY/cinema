@@ -74,11 +74,12 @@ EOF;
 
 /**
  * @param Cinema $cinema
+ * @param $action
  * @return void
  */
 function addEditFrom(Cinema $cinema,$action){
     echo <<<EOF
-        <form class="form edit-form" id="editForm" action="{$action}" method="post">
+        <form class="form edit-form" id="editForm" action="$action" method="post">
             <div class="form-header">
                 <span>编辑</span> <a class="formClose">x</a>
             </div>
@@ -103,6 +104,8 @@ EOF;
 
 function addUserCard($user)
 {
+    $disabled = $user->getPower() === 'admin' ? 'disabled' : '';
+    $class=$user->getPower()==='admin'?'disabled':'change-button';
     echo <<<EOF
     <tr class="user-card">
         <td>{$user->getUsername()}</td>
@@ -110,15 +113,15 @@ function addUserCard($user)
         <td>{$user->getEmail()}</td>
         <td>{$user->getPhone()}</td>
         <td>
-            <button class="change-button" data-id="{$user->getId()}">修改</button>
+            <button $disabled class="$class" data-power="{$user->getPower()}" data-id="{$user->getId()}">修改</button>
         </td>
         <td>
-            <button class="cinema-delete-button" data-id="{$user->getId()}" data-id="{$user->getId()}">删除</button>
+            <button $disabled  class="$class" data-id="{$user->getId()}" data-id="{$user->getId()}">删除</button>
         </td>    
     </tr>
 EOF;
 }
-function addPagination($page, $totalPage): string
+function addPagination($page,$totalPage): string
 {
     $range = 2;
     $showitems = ($range * 2) + 1;

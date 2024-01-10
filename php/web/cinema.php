@@ -2,10 +2,15 @@
 /**
  * @var mysqli $dbc
  */
+require_once 'webFun.php';
 require_once '../class/User.php';
 require_once '../class/Cinema.php';
 require_once '../dataBase/mysqli_connect.php';
-require_once 'webFun.php';
+session_start();
+if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true || $_SESSION['user']->getPower() !== 'admin' ) {
+    echo "你不是管理员！";
+    exit;
+}
 $page = $_GET['page'] ?? 1;
 $perPageSize = 10;
 $offset = ($page - 1) * $perPageSize;

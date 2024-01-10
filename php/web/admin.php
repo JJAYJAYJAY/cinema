@@ -7,15 +7,15 @@ require_once '../dataBase/mysqli_connect.php';
 require_once '../class/User.php';
 require_once 'webFun.php';
 session_start();
-if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
-    header('Location: index.php');
+if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true || $_SESSION['user']->getPower() !== 'admin' ) {
+    echo "你不是管理员！";
     exit;
 }
 $page = $_GET['page'] ?? 1;
-$perPageSize = 10;
-$offset = ($page - 1) * $perPageSize;
-$users=safeSelectQuery($dbc,'select * from users where identity=? limit ?,?',['guest',$offset,$perPageSize]);
+$perPageSize = 12;
 $totalPage = ceil(safeSelectQuery($dbc, 'select count(*) from users')->fetch_row()[0] / $perPageSize);
+$offset = ($page - 1) * $perPageSize;
+$users=safeSelectQuery($dbc,'select * from users limit ?,?',[$offset,$perPageSize]);
 $usersArray=[];
 while($user=$users->fetch_row()) {
     $usersArray[] = new User(...$user);
@@ -27,7 +27,6 @@ while($user=$users->fetch_row()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="../../static/js/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="../../static/css/meyer.css">
     <link rel="stylesheet" href="../../static/css/admin.css">
     <link rel="stylesheet" href="../../static/css/page.css">
