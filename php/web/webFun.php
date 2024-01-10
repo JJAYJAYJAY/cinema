@@ -105,7 +105,8 @@ EOF;
 function addUserCard($user)
 {
     $disabled = $user->getPower() === 'admin' ? 'disabled' : '';
-    $class=$user->getPower()==='admin'?'disabled':'change-button';
+    $changeClass=$user->getPower()==='admin'?'disabled':'change-button';
+    $deleteClass=$user->getPower()==='admin'?'disabled':'cinema-delete-button';
     echo <<<EOF
     <tr class="user-card">
         <td>{$user->getUsername()}</td>
@@ -113,10 +114,10 @@ function addUserCard($user)
         <td>{$user->getEmail()}</td>
         <td>{$user->getPhone()}</td>
         <td>
-            <button $disabled class="$class" data-power="{$user->getPower()}" data-id="{$user->getId()}">修改</button>
+            <button $disabled class="$changeClass" data-power="{$user->getPower()}" data-id="{$user->getId()}">修改</button>
         </td>
         <td>
-            <button $disabled  class="$class" data-id="{$user->getId()}" data-id="{$user->getId()}">删除</button>
+            <button $disabled  class="$deleteClass" data-id="{$user->getId()}" data-id="{$user->getId()}">删除</button>
         </td>    
     </tr>
 EOF;
