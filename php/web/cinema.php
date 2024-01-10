@@ -35,7 +35,7 @@ $totalPage = ceil(safeSelectQuery($dbc, 'select count(*) from cinema')->fetch_ro
     <link rel="stylesheet" href="../../static/css/commentForm.css">
 </head>
 <body>
-    <div class="header">电影管理</div>
+<div class="header">电影管理 <span class="add-cinema-button">添加电影</span></div>
     <div class="cinema-box">
         <?php
         /**
@@ -71,6 +71,21 @@ $totalPage = ceil(safeSelectQuery($dbc, 'select count(*) from cinema')->fetch_ro
         addEditFrom($cinemas[0],'../server/cinemaServer.php');
     ?>
     <div class="overlay" id="overlay"></div>
+    <form class="form add-new" action="../server/cinemaServer.php" enctype="multipart/form-data"  method="post">
+        <div class="form-header">
+            <span class="form-title">添加电影</span><a class="formClose">X</a>
+        </div>
+        <input type="hidden" name="command" value="add">
+        <div class="edit-item"><div class="edit-item-title">电影名称：</div><input type="text" class="edit-item-content"  name="name"></div>
+        <div class="edit-item"><div class="edit-item-title">导演：</div><input type="text"   class="edit-item-content"   name="director"></div>
+        <div class="edit-item"><div class="edit-item-title">上映时间：</div><input type="date" class="edit-item-content"  name="time"></div>
+        <div class="edit-item"><div class="edit-item-title">国家/地区：</div><input type="text" class="edit-item-content"  name="country"></div>
+        <div class="edit-item"><div class="edit-item-title">片长：</div><input type="text"   class="edit-item-content"  name="length"></div>
+        <div class="edit-item"><div class="edit-item-title">图片：</div><input type="file" name="image"></div>
+        <div class="edit-item"><div class="edit-item-title">简介：</div></div>
+        <textarea class="form-introduce" name="introduce" cols="30" rows="10" placeholder="电影简介"></textarea>
+        <input class="edit-submit-button" id="addButton" type="submit" value="提交">
+    </form>
 </body>
 <script src="../../static/js/jquery-3.7.1.min.js"></script>
 <script src="../../static/js/cinema.js"></script>

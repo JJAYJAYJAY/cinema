@@ -56,10 +56,45 @@ $delete=function ($dbc){
         echo json_encode(['status'=>'fail']);
     }
 };
-
+$add=function ($dbc){
+    $file=$_FILES['image'];
+    if($file['type']!='image/jpeg'&&$file['type']!='image/png'){
+        echo json_encode(['status'=>'非法上传']);
+        die();
+    }
+    if($file['size']>1024*1024*2){
+        echo json_encode(['status'=>'文件过大']);
+        die();
+    }
+    $cinemaName=$_POST['name'];
+    $time=$_POST['time'];
+    $director=$_POST['director'];
+    $country=$_POST['country'];
+    $length=$_POST['length'];
+    $introduce=$_POST['introduce'];
+    $imagePath='static/image/cinema/'.$file['name'];
+    //检查是否有空数据
+    if($cinemaName==''||$time==''||$director==''||$country==''||$length==''||$introduce==''){
+        echo json_encode(['status'=>'请将数据填写完整']);
+        die();
+    }
+    if(!move_uploaded_file($file['tmp_name'],'../../'.$imagePath)){
+        echo json_encode(['status'=>'fail']);
+        die('Error: ' . error_get_last()['message']);
+    }
+    if(safeBoolQuery($dbc,'insert into cinema(name,time,director,country,length,introduce) values(?,?,?,?,?,?)',
+        [$cinemaName,$time,$director,$country,$length,$introduce])&&
+        safeBoolQuery($dbc,'insert into images(name,url) values(?,?)',[$cinemaName,$imagePath])){
+        echo json_encode(['status'=>'success']);
+    }
+    else{
+        echo json_encode(['status'=>'fail']);
+    }
+};
 $commands=array(
     'delete'=>$delete,
-    'edit'=>$edit
+    'edit'=>$edit,
+    'add'=>$add
 );
 
 

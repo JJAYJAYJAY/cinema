@@ -94,8 +94,25 @@
         outline: none;
     }
 }
-/*.add-new{*/
-/*    background: #1b78da;*/
-/*    width: 1200px;*/
-/*    height: 600px;*/
-/*}*/
+.add-new{
+    background: #1b78da;
+    width: 1200px;
+    height: 600px;
+}
+.add-cinema-button{
+    position: absolute;
+    right: 50px;
+    font-size: medium;
+    color: #646363;
+    cursor: pointer;
+    margin-top: 5px;
+    border: #646363 solid 1px;
+    padding: 0 5px;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out;
+}
+.add-cinema-button:hover{
+    background-color: #646363;
+    color: #ffffff;
+    transform: scale(1.1);
+}

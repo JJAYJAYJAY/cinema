@@ -14,7 +14,7 @@ deleteButton.each((index, element)=>{
                 },
                 success: (response) => {
                     if (response.status === 'success') {
-                        // window.location.reload();
+                        window.location.reload();
                     } else {
                     }
                 }
@@ -24,12 +24,16 @@ deleteButton.each((index, element)=>{
 })
 let changeForm=$('#editForm');
 let overlay=$('#overlay');
-let closeButton=$('.formClose');
+$.fn.closeForm=function (){
+    $('#overlay').css('display', 'none')
+    this.parent().parent().css('display', 'none')
+}
 
-closeButton.on('click',()=>{
-    overlay.css('display', 'none')
-    changeForm.css('display', 'none')
-})
+$('.formClose').each((index, element)=>{
+    $(element).on('click', ()=> {
+        $(element).closeForm()
+    })
+});
 changeButton.each((index, element)=>{
     $(element).on('click',()=>{
         overlay.css('display', 'block')
@@ -59,6 +63,33 @@ editButton.on('click',()=>{
         success: (response)=>{
             if(response.status === 'success'){
                 alert('修改成功');
+                window.location.reload();
+            }else{
+                alert(response.status);
+            }
+        }
+    })
+})
+
+let addFormButton=$('.add-cinema-button');
+let addForm=$('.add-new');
+addFormButton.on('click',()=>{
+    addForm.css('display','block');
+    overlay.css('display','block');
+})
+let addButton=$('#addButton');
+addButton.on('click',(e)=>{
+    e.preventDefault();
+    let data = new FormData(addForm[0]);
+    $.ajax({
+        url: addForm.attr('action'),
+        type: addForm.attr('method'),
+        processData: false,
+        contentType: false,
+        data: data,
+        success: (response)=>{
+            if(response.status === 'success'){
+                alert('添加成功');
                 window.location.reload();
             }else{
                 alert(response.status);
