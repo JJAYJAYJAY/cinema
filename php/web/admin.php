@@ -5,13 +5,17 @@
  */
 require_once '../dataBase/mysqli_connect.php';
 require_once '../class/User.php';
-
+require_once 'webFun.php';
 session_start();
-if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
-    header('Location: index.php');
+if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true || $_SESSION['user']->getPower() !== 'admin' ) {
+    echo "你不是管理员！";
     exit;
 }
-$users=safeSelectQuery($dbc,'select * from users');
+$page = $_GET['page'] ?? 1;
+$perPageSize = 12;
+$totalPage = ceil(safeSelectQuery($dbc, 'select count(*) from users')->fetch_row()[0] / $perPageSize);
+$offset = ($page - 1) * $perPageSize;
+$users=safeSelectQuery($dbc,'select * from users limit ?,?',[$offset,$perPageSize]);
 $usersArray=[];
 while($user=$users->fetch_row()) {
     $usersArray[] = new User(...$user);
@@ -23,9 +27,9 @@ while($user=$users->fetch_row()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="../../static/js/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="../../static/css/meyer.css">
     <link rel="stylesheet" href="../../static/css/admin.css">
+    <link rel="stylesheet" href="../../static/css/page.css">
 </head>
 <body>
 <div class="header">用户管理</div>
@@ -44,32 +48,18 @@ while($user=$users->fetch_row()) {
          * @var User $user
          */
         foreach ($usersArray as $user){
-            if($user->getPower()==='admin')
-                continue;
             addUserCard($user);
         }
         ?>
     </table>
+</div>
+<div class="page">
+    <?php
+    echo addPagination($page, $totalPage);
+    ?>
 </div>
 </body>
 <script src="../../static/js/jquery-3.7.1.min.js"></script>
 <script src="../../static/js/admin.js"></script>
 </html>
 <?php
-function addUserCard($user)
-{
-    echo <<<EOF
-    <tr class="user-card">
-        <td>{$user->getUsername()}</td>
-        <td>{$user->getPower()}</td>
-        <td>{$user->getEmail()}</td>
-        <td>{$user->getPhone()}</td>
-        <td>
-            <button class="change-button" data-id="{$user->getId()}">修改</button>
-        </td>
-        <td>
-            <button class="delete-button" data-id="{$user->getId()}" data-id="{$user->getId()}">删除</button>
-        </td>    
-    </tr>
-EOF;
-}

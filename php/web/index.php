@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    unset($_SESSION['is_logged_in']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,6 +54,7 @@
     </form>
 </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 <script src="../../static/js/jquery-3.7.1.min.js"></script>
 <script src="../../static/js/index.js"></script>
 </html>

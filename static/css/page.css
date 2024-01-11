@@ -1,0 +1,54 @@
+.page{
+    display: flex;
+    width: 70%;
+    margin: 15px auto 0 auto;
+    height: 30px;
+    justify-content: space-between;
+
+}
+.page-header{
+    width: 20%;
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+}
+.page-tail{
+    width: 20%;
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+}
+.page-number{
+    display: flex;
+    width: 60%;
+    justify-content: space-around;
+}
+.page a{
+    cursor: pointer;
+    color: #646363;
+}
+.page a:hover{
+    color: #1f1ff6;
+}
+.page-number a:hover{
+    color: #ffffff;
+    background: #115cfd;
+}
+.page-number *{
+    width: 30px;
+    height: 20px;
+    border-radius: 5px;
+    border: #646363 solid 1px;
+    text-align: center;
+    line-height: 20px;
+    font-size:small;
+    color: #646363;
+}
+.page-number .current{
+    border-radius: 5px;
+    border: #646363 solid 1px;
+    text-align: center;
+    line-height: 20px;
+    background: #0505ef;
+    color: #ffffff;
+}

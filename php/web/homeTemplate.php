@@ -16,7 +16,7 @@ $user=$_SESSION['user'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>首页</title>
     <script src="../../static/js/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="../../static/css/meyer.css">
     <link rel="stylesheet" href="../../static/css/homeTemplate.css">
@@ -31,12 +31,14 @@ $user=$_SESSION['user'];
     <div class="left-menu">
         <ul>
             <li class="menu-item active">首页</li>
+            <li class="menu-item ">所有电影</li>
             <li class="menu-item">搜索</li>
-            <li class="menu-item">个人信息</li>
             <li class="menu-item">我的评论</li>
             <?php
-            if($user->getPower()=='admin')
+            if($user->getPower()=='admin') {
                 echo '<li class="menu-item">管理员</li>';
+                echo '<li class="menu-item">电影管理</li>';
+            }
             ?>
         </ul>
     </div>

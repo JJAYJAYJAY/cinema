@@ -1,0 +1,119 @@
+.header{
+    height: 70px;
+    font-size: xx-large;
+    font-weight: bold;
+    padding-left: 30px;
+    line-height: 40px;
+    padding-top: 10px;
+    border-bottom: #cccccc solid 1px;
+}
+.cinema-box{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 70%;
+    margin: 20px auto 0;
+}
+.cinema-item{
+    display: flex;
+    border-radius: 5px;
+    box-shadow: #646363 0 0 15px;
+    padding: 10px;
+}
+.cinema-item  .cinema-image{
+    width: 150px;
+    height: 200px;
+    overflow: hidden;
+}
+.cinema-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.cinema-info{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 10px;
+}
+.cinema-operation{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-around;
+}
+.cinema-operation div{
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.delete-button{
+    border: #f50d0d solid 1px;
+    color: red;
+    transition: 0.2s ease-in-out;
+}
+.change-button{
+    border: #02be02 solid 1px;
+    color: #02be02;
+    transition: 0.2s ease-in-out;
+}
+.delete-button:hover{
+    background-color: #f50d0d;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+.change-button:hover{
+    background-color: #02be02;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+.edit-form{
+    width: 700px;
+    height: 540px;
+}
+.edit-item{
+    display: flex;
+    margin-top: 20px;
+    margin-left: 20px;
+    gap: 5px;
+    height: 30px;
+
+}
+.edit-item .edit-item-title{
+    line-height: 30px;
+}
+.edit-item .edit-item-content{
+    border: 1px solid #ccc;
+    height: 100%;
+    padding-left: 5px;
+    cursor: text;
+}
+.edit-item .edit-item-content:focus-visible{
+    outline: none;
+}
+.add-new{
+    background: #1b78da;
+    width: 1200px;
+    height: 600px;
+}
+.add-cinema-button{
+    position: absolute;
+    right: 50px;
+    font-size: medium;
+    color: #646363;
+    cursor: pointer;
+    margin-top: 5px;
+    border: #646363 solid 1px;
+    padding: 0 5px;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out;
+}
+.add-cinema-button:hover{
+    background-color: #646363;
+    color: #ffffff;
+    transform: scale(1.1);
+}

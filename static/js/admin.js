@@ -1,5 +1,5 @@
 let changeButtons=$('.change-button');
-let deleteButtons=$('.delete-button');
+let deleteButtons=$('.cinema-delete-button');
 
 changeButtons.each((index,element)=>{
     $(element).on('click',()=>{

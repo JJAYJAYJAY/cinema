@@ -5,7 +5,7 @@ require_once '../dataBase/mysqli_connect.php';
  * @param $username string
  * @return string|false
  */
-function checkUsername($dbc,$username){
+function checkUsername(mysqli $dbc, string $username){
     $result=safeSelectQuery($dbc, 'select * from users where username=?', [$username]);
     if(mysqli_num_rows($result)==0){
         return false;

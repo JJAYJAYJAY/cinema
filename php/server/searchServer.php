@@ -5,9 +5,11 @@
 require_once '../dataBase/mysqli_connect.php';
 require_once '../class/Cinema.php';
 //查询服务
+header("Content-Type: application/json;charset=utf-8");
 if(isset($_SERVER['HTTP_X_REQUESTED_WITH'])&&$_SERVER['REQUEST_METHOD']=='POST') {
     //从电影库中搜索，要求关键字搜索
     if (isset($_POST['search'])&&$_POST['search']!="") {
+        $response=[];
         $searches=preg_split('/\s+/',$_POST['search']);
         foreach ($searches as $search){
             $result = safeSelectQuery($dbc,
@@ -20,37 +22,24 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH'])&&$_SERVER['REQUEST_METHOD']=='POST')
             }
         }
         if(isset($movies)){
+
             foreach ($movies as $movie){
-                addCinemaCard($dbc, $movie->getName());
+                $image = safeSelectQuery($dbc,
+                    'select url from images where name=?',
+                    [$movie->getName()]);
+                $response[]=[
+                    'name'=>$movie->getName(),
+                    'image'=>$image->fetch_row()[0],
+                    'id'=>$movie->getId(),
+                    'time'=>$movie->getTime(),
+                    'director'=>$movie->getDirector(),
+                    'country'=>$movie->getCountry(),
+                    'length'=>$movie->getLength(),
+                    'introduce'=>$movie->getIntroduce()
+                ];
             }
-        }else{
-            echo '<div style="text-align: center;width: 100%;color: #6e6e6e">没有找到相关电影</div>';
         }
-    }else{
-        echo '<div style="text-align: center;width: 100%;color: #6e6e6e">没有找到相关电影</div>';
+        echo json_encode($response);
     }
-}
-
-
-function addCinemaCard($dbc, $name)
-{
-    $result = safeSelectQuery($dbc,
-        'select * from images where name=?',
-        [$name]);
-    echo <<<EOF
-    <div class="cinema-card">
-        <div class="cinema-image">
-            <img src="../../{$result->fetch_row()[1]}" alt="加载失败">
-        </div>
-        <div class="content">
-            <div class="cinema-name">$name</div>
-        <div class="button-div">
-            <a href="cinemaDetails.php?name=$name" target="_blank" class="go-button">
-                <span class="button-content">查看详情</span>
-            </a>
-        </div>       
-        </div>
-    </div>
-EOF;
 }
 ?>

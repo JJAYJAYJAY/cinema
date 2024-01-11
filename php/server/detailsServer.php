@@ -48,9 +48,6 @@ $deleteComment=function ($dbc){
     }
 };
 $edit=function ($dbc){
-    //插入内容的时候把换行符换成<br>
-
-
     if(safeBoolQuery($dbc,
         'update cinema set time=?,director=?,country=?,length=?,introduce=? where name=?',
        [$_POST['time'],$_POST['director'],$_POST['country'],$_POST['length'],$_POST['introduce'],$_POST['cinema']])){
