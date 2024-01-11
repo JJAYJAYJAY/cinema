@@ -23,6 +23,7 @@ body{
     background: linear-gradient(180deg, #313030 0%, #eaebe7 100%);
     height: 100%;
     width: 10%;
+    min-width: 140px;
     user-select: none;
 }
 .greet{

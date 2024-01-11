@@ -43,6 +43,7 @@ html {
 
 .header .search .search-btn {
     width: 7%;
+    min-width: 47px;
     border: none;
     background: inherit;
     cursor: pointer;
@@ -58,6 +59,7 @@ html {
     justify-content:flex-start;
     align-content: flex-start;
     width: 70%;
+    min-width: 930px;
     margin:0 auto;
     gap: 50px;
 }

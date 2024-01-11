@@ -12,6 +12,7 @@
 }
 .user-list{
     width: 70%;
+    min-width: 755px;
     margin: 0 auto;
 }
 .user-list tbody{

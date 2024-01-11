@@ -12,6 +12,7 @@
     flex-direction: column;
     gap: 10px;
     width: 70%;
+    min-width: 945px;
     margin: 20px auto 0;
 }
 .cinema-item{

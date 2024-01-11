@@ -127,7 +127,8 @@ while($comment=$commentResult->fetch_row()){
     </div>
     <div class="cinema-introduce">
         <div class="title"><span>电影简介:</span><?php if($user->getPower()==='admin') echo '<span class="edit-button">修改</span>'?></div>
-<div class="introduce-content"><?php echo nl2br(str_replace(' ', '&nbsp;', $cinema->getIntroduce()))?></div>    </div>
+        <div class="introduce-content"><?php echo nl2br(str_replace(' ', '&nbsp;', $cinema->getIntroduce()))?></div>
+    </div>
     <div class="clearfix">
         <div class="stars-box">
             <span>评价:</span>
