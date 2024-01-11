@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    unset($_SESSION['is_logged_in']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

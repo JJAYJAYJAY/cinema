@@ -8,6 +8,10 @@ require_once '../dataBase/mysqli_connect.php';
 require_once '../class/Comment.php';
 require_once 'webFun.php';
 session_start();
+if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
+    header('Location: index.php');
+    exit;
+}
 $user=$_SESSION['user'];
 $page = $_GET['page'] ?? 1;
 $perPageSize = 10;
