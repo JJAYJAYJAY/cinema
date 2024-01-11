@@ -21,6 +21,16 @@ $changePower=function ($dbc){
 };
 
 $deleteUser=function ($dbc){
+    $name=safeSelectQuery($dbc,
+        'select username from users where id=?',
+        [$_POST['id']])->fetch_row()[0];
+
+    safeBoolQuery($dbc,
+        'delete from comment where who=?',
+        [$name]);
+    safeBoolQuery($dbc,
+        'delete from user_good_link where userid=?',
+        [$_POST['id']]);
     if(safeBoolQuery($dbc,
         'delete from users where id=?',
         [$_POST['id']])){

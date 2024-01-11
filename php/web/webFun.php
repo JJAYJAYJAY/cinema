@@ -102,17 +102,20 @@ EOF;
 EOF;
 }
 
-function addUserCard($user)
+function addUserCard(User $user)
 {
+    $name=htmlspecialchars($user->getUsername(), ENT_QUOTES, 'UTF-8');
+    $email=htmlspecialchars($user->getEmail(), ENT_QUOTES, 'UTF-8');
+    $phone=htmlspecialchars($user->getPhone(), ENT_QUOTES, 'UTF-8');
     $disabled = $user->getPower() === 'admin' ? 'disabled' : '';
     $changeClass=$user->getPower()==='admin'?'disabled':'change-button';
     $deleteClass=$user->getPower()==='admin'?'disabled':'cinema-delete-button';
     echo <<<EOF
     <tr class="user-card">
-        <td>{$user->getUsername()}</td>
+        <td>$name</td>
         <td>{$user->getPower()}</td>
-        <td>{$user->getEmail()}</td>
-        <td>{$user->getPhone()}</td>
+        <td>$email</td>
+        <td>$phone</td>
         <td>
             <button $disabled class="$changeClass" data-power="{$user->getPower()}" data-id="{$user->getId()}">修改</button>
         </td>
@@ -200,6 +203,7 @@ function addCinemaCard(mysqli $dbc, string $name){
     $result=safeSelectQuery($dbc,
         'select * from images where name=?',
         [$name]);
+    $name=htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
     echo <<<EOF
     <div class="cinema-card">
         <div class="cinema-image">

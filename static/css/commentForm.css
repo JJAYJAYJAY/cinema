@@ -1,45 +1,55 @@
-.form-header{
+.form-header {
     width: 100%;
     height: 40px;
     font-size: larger;
     background: #e5fdef;
     line-height: 40px;
     color: #0b6412;
-    :first-child{
-        padding-left: 10px;
-    }
-    :last-child{
-        position: absolute;
-        right: 10px;
-        font-size: small;
-        font-weight: 400;
-        cursor: pointer;
-        color: #595959;
-    }
 }
-.comment-form .stars-box{
+
+.form-header:first-child {
+    padding-left: 10px;
+}
+
+.formClose{
+    position: absolute;
+    right: 10px;
+    font-size: small;
+    font-weight: 400;
+    cursor: pointer;
+    color: #595959;
+}
+
+.comment-form .stars-box {
     margin-top: 20px;
     margin-left: 20px;
     gap: 20px;
 }
-.comment-label{
+
+.comment-label {
     margin-top: 20px;
     margin-left: 20px;
 }
-.form-comment,.form-introduce{
+
+.form-comment,
+.form-introduce {
     margin-top: 10px;
     resize: none;
     margin-left: 20px;
-    width:90%;
+    width: 90%;
     height: 150px;
     padding: 10px;
     border: 1px solid #cccccc;
 }
-.form-comment:focus-visible,.form-introduce:focus-visible {
+
+.form-comment:focus-visible,
+.form-introduce:focus-visible {
     outline-offset: 0;
     outline: none;
 }
-.comment-button,.edit-submit-button{
+
+.comment-button,
+.edit-submit-button {
     margin-top: 10px;
     margin-left: calc(100% - 70px);
     width: 60px;
@@ -49,11 +59,13 @@
     border: none;
     cursor: pointer;
 }
-.delete-div{
+
+.delete-div {
     text-align: right;
     padding-right: 20px;
 }
-.form{
+
+.form {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -63,6 +75,7 @@
     background: #ffffff;
     display: none;
 }
+
 .overlay {
     display: none;
     position: fixed;
@@ -73,11 +86,13 @@
     background: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
-.cinema-delete-button{
+
+.cinema-delete-button {
     font-size: x-small;
     color: #595959;
-    cursor:pointer;
+    cursor: pointer;
 }
-.cinema-delete-button:hover{
+
+.cinema-delete-button:hover {
     color: #1196fd;
 }

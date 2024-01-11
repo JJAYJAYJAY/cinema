@@ -1,9 +1,10 @@
-.header{
+.header {
     width: 100%;
     height: 60px;
     background: linear-gradient(135deg, #282828, #bcc1c5);
 }
-.greet{
+
+.greet {
     position: absolute;
     top: 10px;
     left: 30px;
@@ -12,11 +13,13 @@
     font-weight: 600;
     font-family: Tahoma, Geneva, Verdana, sans-serif;
 }
-.content{
+
+.content {
     width: 70%;
     margin: 20px auto;
 }
-.cinema-name{
+
+.cinema-name {
     width: 70%;
     min-width: 670px;
     margin-bottom:10px ;
@@ -25,7 +28,8 @@
     font-weight: 600;
     font-family: Tahoma, Geneva, Verdana, sans-serif;
 }
-.cinema-box{
+
+.cinema-box {
     display: flex;
     width: 700px;
     min-width: 670px;
@@ -33,16 +37,19 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-.cinema-box .left{
+
+.cinema-box .left {
     width: 30%;
     height: 300px;
 }
-.cinema-box .left img{
+
+.cinema-box .left img {
     width: 100%;
     height: 100%;
     border-radius: 10px;
 }
-.cinema-box .middle{
+
+.cinema-box .middle {
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -51,67 +58,82 @@
     padding-left: 10px;
     gap: 20px;
 }
-.cinema-item{
+
+.cinema-item {
     display: flex;
-    .cinema-item-title{
-        margin-right: 5px;
-    }
 }
-.cinema-box .right{
+
+.cinema-item .cinema-item-title {
+    margin-right: 5px;
+}
+
+.cinema-box .right {
     width: 20%;
     border-left: 1px solid rgba(141, 141, 141, 0.91);
     padding-left: 15px;
-    .title{
-        font-size: small;
-        color: #505050;
-    }
-    .score{
-        margin: 10px 0;
-        height: 30px;
-        font-size: 30px;
-        font-weight: 600;
-        font-family: Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .stars{
-        display: flex;
-        width: 105px;
-        height: 21px;
-        .star{
-            cursor: default;
-        }
-    }
-    .yellow{
-        position: relative;
-        top:-21px;
-        overflow: hidden;
-    }
 }
-.clearfix{
+
+.cinema-box .right .title {
+    font-size: small;
+    color: #505050;
+}
+
+.cinema-box .right .score {
+    margin: 10px 0;
+    height: 30px;
+    font-size: 30px;
+    font-weight: 600;
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cinema-box .right .stars {
+    display: flex;
+    width: 105px;
+    height: 21px;
+}
+
+.cinema-box .right .stars .star {
+    cursor: default;
+}
+
+.cinema-box .right .yellow {
+    position: relative;
+    top:-21px;
+    overflow: hidden;
+}
+
+.clearfix {
     width: 70%;
     min-width: 670px;
     margin-top: 15px;
-    .small-box{
-        margin-top: 15px;
-        color: #1b78da;
-        width: fit-content;
-        font-size: small;
-        cursor: pointer;
-    }
-    .small-box:hover{
-        background: #1b78da;
-        color: #ffffff;
-    }
 }
-.stars-box{
+
+.clearfix .small-box {
+    margin-top: 15px;
+    color: #1b78da;
+    width: fit-content;
+    font-size: small;
+    cursor: pointer;
+}
+
+.clearfix .small-box:hover {
+    background: #1b78da;
+    color: #ffffff;
+}
+
+.stars-box {
     display: flex;
 }
-.stars{
+
+.stars {
     display: flex;
-    .star{
-        cursor: pointer;
-    }
 }
-.cinema-introduce{
+
+.stars .star {
+    cursor: pointer;
+}
+
+.cinema-introduce {
     width: 700px;
     min-width: 670px;
     margin-top: 20px;
@@ -119,111 +141,133 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding: 10px;
     min-height: 150px;
-    .title {
-        font-size: larger;
-        color: #459145;
-        .edit-button{
-            float: right;
-            position: relative;
-            top: 3px;
-            right: 10px;
-            font-size: small;
-            color: #cccccc;
-            cursor: pointer;
-        }
-        .edit-button:hover{
-            color: #1196fd;
-        }
-    }
-    .introduce-content{
-        margin-top: 10px;
-        font-size: small;
-        color: #232323;
-        line-height: 1.5;
-    }
 }
-.comments-box{
+
+.cinema-introduce .title {
+    font-size: larger;
+    color: #459145;
+}
+
+.cinema-introduce .title .edit-button {
+    float: right;
+    position: relative;
+    top: 3px;
+    right: 10px;
+    font-size: small;
+    color: #cccccc;
+    cursor: pointer;
+}
+
+.cinema-introduce .title .edit-button:hover {
+    color: #1196fd;
+}
+
+.cinema-introduce .introduce-content {
+    margin-top: 10px;
+    font-size: small;
+    color: #232323;
+    line-height: 1.5;
+}
+
+.comments-box {
     display: flex;
     flex-direction: column;
     width: 689px;
     min-width: 670px;
-    .comment-card{
-        width: 100%;
-        border-bottom: #cccccc 1px solid;
-        padding:10px 0;
-        .small-title{
-            display: flex;
-            margin-bottom: 10px;
-            gap:10px;
-            .who{
-                color: #126fda;
-                font-weight: 400;
-            }
-            .time{
-                font-size: small;
-                color: #808080;
-            }
-            .good{
-                font-size: small;
-                .good-button{
-                    color: #1b78da;
-                    margin-left: 2px;
-                }
-                .good-button:hover{
-                    color: #ffffff;
-                    background: #1b78da;
-                    cursor: pointer;
-                }
-            }
-        }
-        .comment-content{
-            line-height: 1.5;
-            color: #646363;
-            word-wrap: break-word;
-        }
-    }
 }
-.comment-form{
+
+.comments-box .comment-card {
+    width: 100%;
+    border-bottom: #cccccc 1px solid;
+    padding:10px 0;
+}
+
+.comments-box .comment-card .small-title {
+    display: flex;
+    margin-bottom: 10px;
+    gap:10px;
+}
+
+.comments-box .comment-card .small-title .who {
+    color: #126fda;
+    font-weight: 400;
+}
+
+.comments-box .comment-card .small-title .time {
+    font-size: small;
+    color: #808080;
+}
+
+.comments-box .comment-card .small-title .good {
+    font-size: small;
+}
+
+.comments-box .comment-card .small-title .good .good-button {
+    color: #1b78da;
+    margin-left: 2px;
+}
+
+.comments-box .comment-card .small-title .good .good-button:hover {
+    color: #ffffff;
+    background: #1b78da;
+    cursor: pointer;
+}
+
+.comments-box .comment-card .comment-content {
+    line-height: 1.5;
+    color: #646363;
+    word-wrap: break-word;
+}
+
+.comment-form {
     width: 700px;
     height: 330px;
 }
 
-.delete-div{
+.delete-div {
     text-align: right;
     padding-right: 20px;
 }
-.cinema-delete-button{
+
+.cinema-delete-button {
     font-size: x-small;
     color: #595959;
     cursor:pointer;
 }
-.cinema-delete-button:hover{
+
+.cinema-delete-button:hover {
     color: #1196fd;
 }
-.edit-form{
+
+.edit-form {
     width: 700px;
     height: 540px;
 }
-.edit-item{
+
+.edit-item {
     display: flex;
     margin-top: 20px;
     margin-left: 20px;
     gap: 5px;
     height: 30px;
-    .edit-item-title{
-        line-height: 30px;
-    }
-    .edit-item-content{
-        border: 1px solid #ccc;
-        height: 100%;
-        padding-left: 5px;
-        cursor: text;
-    }
-    .edit-item-content:focus-visible{
-        outline: none;
-    }
 }
-.count{
+
+.edit-item .edit-item-title {
+    line-height: 30px;
+}
+
+.edit-item .edit-item-content {
+    border: 1px solid #ccc;
+    height: 100%;
+    padding-left: 5px;
+    cursor: text;
+}
+
+.edit-item .edit-item-content:focus-visible {
+    outline: none;
+}
+
+.count {
     font-size: small;
     color: #808080;
     margin-top: -15px;

@@ -41,7 +41,7 @@ $totalPage = ceil(safeSelectQuery($dbc, 'select count(*) from comment where who=
                echo addMyComment($comment);
            }
         }else{
-            echo '<div style="text-align: center;width: 100%;color: #6e6e6e">你还没有评论哦</div>';
+            echo '<div style="text-align: center;width: 100%;color: #6e6e6e;margin-top: 20px">你还没有评论哦</div>';
         }
         ?>
     </div>
