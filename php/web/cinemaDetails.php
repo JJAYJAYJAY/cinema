@@ -22,8 +22,8 @@ try {
     exit;
 }
 $commentResult=safeSelectQuery($dbc,
-    'select * from comment where cinema=? order by time desc',
-    [$name]);
+    'select * from comment where cinema_id=? order by time desc',
+    [$cinema->getId()]);
 $comments=[];
 while($comment=$commentResult->fetch_row()){
     $comments[]=new Comment(...$comment);
@@ -59,6 +59,7 @@ while($comment=$commentResult->fetch_row()){
     <input type="hidden" name="who" value="<?php echo $user->getUsername()?>">
     <input type="hidden" name="score" id="starsInput" value="2">
     <input type="hidden" name="cinema" value="<?php echo $name?>">
+    <input type="hidden" name="cinemaId" value="<?php echo $cinema->getId()?>">
     <div class="comment-label">简短评论:</div>
     <label for="content"></label><textarea class="form-comment" name="content" id="content" placeholder="写下你的评论..."></textarea>
     <input class="comment-button" type="submit" value="提交" id="commentButton">

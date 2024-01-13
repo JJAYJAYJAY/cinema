@@ -20,9 +20,9 @@ $edit=function ($dbc){
     }
 };
 $delete=function ($dbc){
-    $cinemaName=safeSelectQuery($dbc,'select name from cinema where id=?',[$_POST['id']])->fetch_row()[0];
+    $id=$_POST['id'];
     //删除图片
-    $images=safeSelectQuery($dbc,'select url from images where name=?',[$cinemaName]);
+    $images=safeSelectQuery($dbc,'select url from images where cinema_id=?',[$id]);
     while($row=$images->fetch_row()){
         $image=$row[0];
         if(!unlink('../../'.$image)){
@@ -32,7 +32,7 @@ $delete=function ($dbc){
     }
 
     $comments=[];
-    $commentsId=safeSelectQuery($dbc,'select id from comment where cinema=?',[$cinemaName]);
+    $commentsId=safeSelectQuery($dbc,'select id from comment where cinema_id=?',[$id]);
     while($row=$commentsId->fetch_row()){
         $comments[]=$row[0];
     }
@@ -49,8 +49,8 @@ $delete=function ($dbc){
     }
     //删除电影
     if(safeBoolQuery($dbc,'delete from cinema where id=? ', [$_POST['id']])&&
-    safeBoolQuery($dbc,'delete from images where name=?',[$cinemaName])){
-        echo json_encode(['status'=>'success','cinema'=>$cinemaName]);
+    safeBoolQuery($dbc,'delete from images where cinema_id=?',[$id])){
+        echo json_encode(['status'=>'success']);
     }
     else {
         echo json_encode(['status'=>'fail']);
@@ -82,9 +82,11 @@ $add=function ($dbc){
         echo json_encode(['status'=>'fail']);
         die('Error: ' . error_get_last()['message']);
     }
-    if(safeBoolQuery($dbc,'insert into cinema(name,time,director,country,length,introduce) values(?,?,?,?,?,?)',
-        [$cinemaName,$time,$director,$country,$length,$introduce])&&
-        safeBoolQuery($dbc,'insert into images(name,url) values(?,?)',[$cinemaName,$imagePath])){
+    if(safeBoolQuery($dbc,
+        'insert into cinema(name,time,director,country,length,introduce) values(?,?,?,?,?,?)',
+        [$cinemaName,$time,$director,$country,$length,$introduce])){
+        $cinemaId=safeSelectQuery($dbc,'select id from cinema where name=?',[$cinemaName])->fetch_row()[0];
+        safeBoolQuery($dbc,'insert into images(cinema_id,url) values(?,?)',[$cinemaId,$imagePath]);
         echo json_encode(['status'=>'success']);
     }
     else{

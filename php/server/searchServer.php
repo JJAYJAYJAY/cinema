@@ -4,6 +4,7 @@
  */
 require_once '../dataBase/mysqli_connect.php';
 require_once '../class/Cinema.php';
+require_once '../web/webFun.php';
 //查询服务
 header("Content-Type: application/json;charset=utf-8");
 if(isset($_SERVER['HTTP_X_REQUESTED_WITH'])&&$_SERVER['REQUEST_METHOD']=='POST') {
@@ -22,14 +23,11 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH'])&&$_SERVER['REQUEST_METHOD']=='POST')
             }
         }
         if(isset($movies)){
-
             foreach ($movies as $movie){
-                $image = safeSelectQuery($dbc,
-                    'select url from images where name=?',
-                    [$movie->getName()]);
+                $image=getImages($dbc,$movie->getId());
                 $response[]=[
                     'name'=>$movie->getName(),
-                    'image'=>$image->fetch_row()[0],
+                    'image'=>$image,
                     'id'=>$movie->getId(),
                     'time'=>$movie->getTime(),
                     'director'=>$movie->getDirector(),

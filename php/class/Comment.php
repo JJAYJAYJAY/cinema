@@ -5,16 +5,19 @@ class Comment
     private $id;
     private $who;
     private $cinema;
+
+    private $cinemaId;
     private $score;
     private $time;
     private $good;
     private $content;
 
-    public function __construct($id, $who, $cinema, $score, $time, $good, $content)
+    public function __construct($id, $who, $cinema,$cinemaId, $score, $time, $good, $content)
     {
         $this->id = $id;
         $this->who = $who;
         $this->cinema = $cinema;
+        $this->cinemaId = $cinemaId;
         $this->score = $score;
         $this->time = $time;
         $this->good = $good;
