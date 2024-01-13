@@ -28,7 +28,7 @@ require_once 'webFun.php'
     $cinemas=safeSelectQuery($dbc,
         'select * from cinema order by time desc limit 8');
     while($cinema=$cinemas->fetch_row()){
-        addCinemaCard($dbc,$cinema[1]);
+        addCinemaCard($dbc,$cinema[0],$cinema[1]);
     }
     ?>
 </div>

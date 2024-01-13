@@ -1,8 +1,8 @@
 <?php
-function getImages(mysqli $dbc,string $name){
+function getImages(mysqli $dbc,string $id){
     $result=safeSelectQuery($dbc,
-        'select * from images where name=?',
-        [$name]);
+        'select * from images where cinema_id=?',
+        [$id]);
     return $result->fetch_row()[1];
 }
 
@@ -199,10 +199,10 @@ EOF;
  * @param $name string
  * @return void
  */
-function addCinemaCard(mysqli $dbc, string $name){
+function addCinemaCard(mysqli $dbc, string $id,string $name){
     $result=safeSelectQuery($dbc,
-        'select * from images where name=?',
-        [$name]);
+        'select * from images where cinema_id=?',
+        [$id]);
     $name=htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
     echo <<<EOF
     <div class="cinema-card">

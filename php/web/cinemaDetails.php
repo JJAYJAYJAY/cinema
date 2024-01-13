@@ -75,7 +75,7 @@ while($comment=$commentResult->fetch_row()){
     </div>
     <div class="cinema-box">
         <div class="left">
-            <img src="../../<?php echo getImages($dbc,$name)?>" alt="加载失败">
+            <img src="../../<?php echo getImages($dbc,$cinema->getId())?>" alt="加载失败">
         </div>
         <div class="middle">
             <?php

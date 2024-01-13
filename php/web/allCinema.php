@@ -36,7 +36,7 @@ $totalPage = ceil(safeSelectQuery($dbc, 'select count(*) from cinema')->fetch_ro
 <div class="card-box">
     <?php
     foreach ($cinemas as $cinema) {
-        addCinemaCard($dbc,$cinema->getName());
+        addCinemaCard($dbc,$cinema->getId(),$cinema->getName());
     }
     ?>
 </div>

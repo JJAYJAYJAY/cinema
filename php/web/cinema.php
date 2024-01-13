@@ -42,7 +42,7 @@ $totalPage = ceil(safeSelectQuery($dbc, 'select count(*) from cinema')->fetch_ro
          * @var Cinema $cinema
          */
         foreach ($cinemas as $cinema){
-            $image=getImages($dbc,$cinema->getName());
+            $image=getImages($dbc,$cinema->getId());
             echo "<div class='cinema-item'>
                     <div class='cinema-image'><img src='../../$image' alt=''></div>
                     <div class='cinema-info'>
